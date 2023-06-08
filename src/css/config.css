@@ -1,0 +1,54 @@
+.settings-heading {
+  padding: 1em 0;
+}
+
+.kintoneplugin-input-text {
+  width: 17em;
+}
+
+.text-error {
+  color: red;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.btn-create-field {
+  position: absolute;
+  width: 110px;
+  top: 1.48rem;
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: #fff;
+  text-align: center;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.btn-create-field:hover {
+  background-color: #1d6fa5;
+  cursor: pointer;
+}
+#plugin-language {
+  width: 200px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #333;
+  font-size: 16px;
+}
+#plugin-language option {
+  padding: 5px;
+  background-color: #fff;
+  color: #333;
+  font-size: 14px;
+}
+#plugin-language option:checked {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}

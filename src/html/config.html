@@ -1,0 +1,89 @@
+<section class="settings">
+  <form class="js-submit-settings">
+    <div style="margin-bottom: 10px">
+      <span style="width: 100px; display: inline-block;" class="text-bold plugin-text-field">Token</span>
+      <input type="password" id="token" class="js-text-message kintoneplugin-input-text">
+      <div style="margin-left: 105px; margin-top: 5px;">
+        <input type="checkbox" name="showToken" value="showToken" id="showToken">
+        <label for="showToken" class="plugin-text-field">Show token</label>
+      </div>
+    </div>
+    <p class="plugin-text-field">If you haven't installed the start date and end date fields on the form, please set them up here.</p>
+    <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
+      <span style="width: 100px; display: inline-block;" class="text-bold plugin-text-field">Start date</span>
+      <div style="display: flex; flex-direction: column; margin-right: 5px">
+        <label for="startDateDisplayName" class="plugin-text-field">Display name</label>
+        <input type="text" name="startDateDisplayName" id="startDateDisplayName" class="kintoneplugin-input-text">
+        <div id="error-displayNameStartDate" class="text-error"></div>
+      </div>
+      <div style="display: flex; flex-direction: column; margin-right: 5px">
+        <label for="startDateFC" class="plugin-text-field">Field code</label>
+        <input type="text" name="startDateFC" id="startDateFC" class="kintoneplugin-input-text">
+        <div id="error-startDateFC" class="text-error"></div>
+      </div>
+      <div style="position: relative;">
+        <button id="btnCreateStartDate" class="plugin-text-field btn-create-field">Create</button>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
+      <span style="width: 100px; display: inline-block;" class="text-bold plugin-text-field">End date</span>
+      <div style="display: flex; flex-direction: column; margin-right: 5px">
+        <label for="endDateDisplayName" class="plugin-text-field">Display name</label>
+        <input type="text" name="endDateDisplayName" id="endDateDisplayName" class="kintoneplugin-input-text">
+        <div id="error-displayNameEndDate" class="text-error"></div>
+      </div>
+      <div style="display: flex; flex-direction: column; margin-right: 5px">
+        <label for="endDateFC" class="plugin-text-field">Field code</label>
+        <input type="text" name="endDateFC" id="endDateFC" class="kintoneplugin-input-text">
+        <div id="error-endDateFC" class="text-error"></div>
+      </div>
+      <div style="position: relative;">
+        <button id="btnCreateEndDate" class="plugin-text-field btn-create-field">Create</button>
+      </div>
+    </div>
+    <p class="plugin-text-field">If you have installed these 2 fields, start date and end date in the form, please enter their field codes below.</p>
+    <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
+      <span style="width: 100px; display: inline-block;" class="text-bold plugin-text-field">Start date</span>
+      <div style="display: flex; flex-direction: column; margin-right: 5px">
+        <label for="startDateFieldCode" class="plugin-text-field">Field code</label>
+        <input type="text" name="startDateFieldCode" id="startDateFieldCode" class="kintoneplugin-input-text">
+        <div id="error-startDateFieldCode" class="text-error"></div>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
+      <span style="width: 100px; display: inline-block;" class="text-bold plugin-text-field">End date</span>
+      <div style="display: flex; flex-direction: column; margin-right: 5px">
+        <label for="endDateFieldCode" class="plugin-text-field">Field code</label>
+        <input type="text" name="endDateFieldCode" id="endDateFieldCode" class="kintoneplugin-input-text">
+        <div id="error-endDateFieldCode" class="text-error"></div>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
+      <span style="width: 100px; display: inline-block;" class="text-bold plugin-text-field">Configure plugin display</span>
+      <div style="margin-right: 10px;">
+        <input type="checkbox" name="showStartDate" id="showStartDate">
+        <label for="showStartDate" class="plugin-text-field">Start date</label>
+      </div>
+      <div style="margin-right: 10px;">
+        <input type="checkbox" name="showEndDate" id="showEndDate">
+        <label for="showEndDate" class="plugin-text-field">End date</label>
+      </div>
+      <div style="margin-right: 10px">
+        <input type="checkbox" name="showSubmitButton" value="showSubmitButton" id="showSubmitButton">
+        <label for="showSubmitButton" class="plugin-text-field">Submit button</label>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
+      <span style="width: 100px; display: inline-block;" class="text-bold plugin-text-field">Language</span>
+      <select id="plugin-language">
+        <option value="en">English</option>
+        <option value="ja">Japanese</option>
+      </select>
+      
+    </div>
+    <div style="margin-top: 20px">
+      <button type="button" class="js-cancel-button kintoneplugin-button-dialog-cancel plugin-text-field">Cancel</button>
+      <button class="kintoneplugin-button-dialog-ok plugin-text-field" id="btnSave">Save</button>
+    </div>
+  </form>
+</section>
