@@ -1,103 +1,4 @@
 jQuery.noConflict();
-const pluginText = {
-  'Submit': {
-    en: 'Submit',
-    ja: '送信'
-  },
-  'Save': {
-    en: 'Save',
-    ja: '保存'
-  },
-  'Cancel': {
-    en: 'Cancel',
-    ja: 'キャンセル'
-  },
-  'Start date': {
-    en: 'Start date',
-    ja: '開始日'
-  },
-  'End date': {
-    en: 'End date',
-    ja: '終了日'
-  },
-  'Token': {
-    en: 'Token',
-    ja: 'トークン'
-  },
-  'Show token': {
-    en: 'Show token',
-    ja: 'トークンを表示する'
-  },
-  'Display name': {
-    en: 'Display name',
-    ja: '表示名'
-  },
-  'Field code': {
-    en: 'Field code',
-    ja: 'フィールドコード'
-  },
-  'Configure plugin display': {
-    en: 'Configure plugin display',
-    ja: 'プラグインの表示設定'
-  },
-  'Display name is required': {
-    en: 'Display name is required',
-    ja: '表示名は必須です。'
-  },
-  'Field code is required': {
-    en: 'Field code is required',
-    ja: 'フィールドコードは必須です'
-  },
-  'Create': {
-    en: 'Create',
-    ja: '作成する'
-  },
-  'Submit button': {
-    en: 'Submit button',
-    ja: '送信ボタン'
-  },
-  "If you haven't installed the start date and end date fields on the form, please set them up here.": {
-    en: "If you haven't installed the start date and end date fields on the form, please set them up here.",
-    ja: '「開始日」と「終了日」フィールドがフォームにインストールされていない場合は、ここで設定してください。'
-  },
-  "If you have installed these 2 fields, start date and end date in the form, please enter their field codes below.": {
-    en: "If you have installed these 2 fields, start date and end date in the form, please enter their field codes below.",
-    ja: "フォームで「開始日」と「終了日」のフィールドをインストールした場合は、その２つのフィールドの設定内でフィールドコードを入力してください。"
-  },
-  "Field codes are duplicated.": {
-    en: "Field codes are duplicated.",
-    ja: "フィールドコードが重複しています。"
-  },
-  "Create success": {
-    en: "Create success",
-    ja: "作成が完了しました。"
-  },
-  "The plug-in settings have been saved. Please update the app!": {
-    en: "The plug-in settings have been saved. Please update the app!",
-    ja: "プラグインの設定が保存されました。アプリを更新してください！"
-  },
-  "Language": {
-    en: "Language",
-    ja: "言語"
-  },
-  "The start date field must have the type DATE": {
-    en: "The start date field must have the type DATE",
-    ja: "「開始日」フィールドは日付型を選択しないといけない。"
-  },
-  "The end date field must have the type DATE": {
-    en: "The end date field must have the type DATE",
-    ja: "「終了日」フィールドは日付型を選択しないといけない。"
-  }
-}
-function getPluginText(text, lang) {
-  try {
-    return pluginText[text][lang];
-  }
-  catch (e) {
-    console.error(text, lang, e);
-    return '';
-  }
-}
 
 (function ($, PLUGIN_ID) {
   'use strict';
@@ -169,6 +70,7 @@ function getPluginText(text, lang) {
     let showSubmitButton = $('#showSubmitButton').prop("checked").toString();
     let startDateFieldCode = $('#startDateFieldCode').val();
     let endDateFieldCode = $('#endDateFieldCode').val();
+    let timesheetFieldCode = $('#timesheetFieldCode').val();
     let language = $('#plugin-language').val();
     let config = {
       token,
@@ -177,6 +79,7 @@ function getPluginText(text, lang) {
       showSubmitButton,
       startDateFieldCode,
       endDateFieldCode,
+      timesheetFieldCode,
       language
     }
     console.log('config', config);
@@ -291,6 +194,61 @@ function getPluginText(text, lang) {
         $('#error-displayNameEndDate').text('');
         $('#error-endDateFC').text('');
         $('#endDateFieldCode').val(fieldCode);
+      }, function (error) {
+        // error
+        alert(getPluginText('Field codes are duplicated.', lang));
+        console.log(error);
+      });
+    }, function (error) {
+      // error
+      alert(getPluginText('Field codes are duplicated.', lang));
+      console.log(error);
+    });
+  })
+  $('#btnCreateTimesheet').on('click', function (e) {
+    e.preventDefault();
+    let displayName = $('#timesheetDisplayName').val();
+    let fieldCode = $('#timesheetFC').val();
+    let isValidate = true;
+    if (!displayName) {
+      isValidate = false;
+      $('#error-displayNameTimesheet').text(getPluginText('Display name is required', lang));
+    }
+    if (!fieldCode) {
+      isValidate = false;
+      $('#error-timesheetFC').text(getPluginText('Field code is required', lang));
+    }
+    if (!isValidate) return;
+    let body = {
+      'app': appId,
+      "properties": {}
+    };
+    body.properties[fieldCode] = {
+      "type": "FILE",
+      "label": displayName,
+      "code": fieldCode
+    }
+    kintone.api(kintone.api.url('/k/v1/preview/app/form/fields', true), 'POST', body, function (resp) {
+      // success
+      console.log(resp);
+      console.log(resp.revision);
+      var body = {
+        'apps': [
+          {
+            'app': appId,
+            'revision': resp.revision
+          }
+        ]
+      };
+      kintone.api(kintone.api.url('/k/v1/preview/app/deploy', true), 'POST', body, function (resp) {
+        // success
+        console.log(resp);
+        alert(getPluginText('Create success', lang));
+        $('#timesheetDisplayName').val('');
+        $('#timesheetFC').val('');
+        $('#error-displayNameTimesheet').text('');
+        $('#error-timesheetFC').text('');
+        $('#timesheetFieldCode').val(fieldCode);
       }, function (error) {
         // error
         alert(getPluginText('Field codes are duplicated.', lang));
