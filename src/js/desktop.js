@@ -48,8 +48,8 @@ jQuery.noConflict();
     let pluginSpace = $('#plugin-space');
     if (pluginSpace) pluginSpace.remove();
   }
-  if (!startDateFieldCode || !endDateFieldCode) {
-    alert(getPluginText('You need to configure the 2 fieldcodes as startdate and enddate to use MF kintone-plugin-Timesheeet.', lang));
+  if (!startDateFieldCode || !endDateFieldCode || !timesheetFieldCode) {
+    alert(getPluginText('You need to configure the 3 fieldcodes as start date, end date and timesheet data storage file to use MF kintone-plugin-Timesheeet.', lang));
     return;
   }
   else {
@@ -63,11 +63,35 @@ jQuery.noConflict();
         alert(getPluginText('The end date field must have the type DATE', lang));
         return;
       }
+      if (appFormData.properties[timesheetFieldCode]?.type !== "FILE") {
+        alert(getPluginText('The timesheet data storage file field must have the type FILE', lang));
+        return;
+      }
     }
     catch (e) {
       console.error(e);
     }
   }
+  kintone.events.on('app.record.index.show', async function (event) {
+    let arr = kintone.app.getFieldElements(timesheetFieldCode);
+    if (arr && arr.length > 0) {
+      let position = -1;
+      console.log(arr[0]);
+      console.log(arr[0].parentElement);
+      let row = arr[0].parentElement;
+      let tds = row.querySelectorAll('td');
+      for (let i = 0; i < tds.length; i++) {
+        if (tds[i] === arr[0]) {
+          position = i;
+          break;
+        }
+      }
+      arr.forEach(element => {
+        element.style.display = 'none';
+      });
+      $(`#view-list-data-gaia table.recordlist-gaia.recordlist-manually-adjusted-gaia thead th:eq(${position})`).hide();
+    }
+  })
   // event app record detail show
   kintone.events.on('app.record.detail.show', async function (event) {
     clearPluginLayout();

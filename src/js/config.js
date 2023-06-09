@@ -21,11 +21,15 @@ jQuery.noConflict();
       console.log(config);
       const startDateFieldCode = config?.startDateFieldCode;
       const endDateFieldCode = config?.endDateFieldCode;
+      const timesheetFieldCode = config?.timesheetFieldCode;
       if (startDateFieldCode && resp.properties[startDateFieldCode]?.type !== "DATE") {
         $('#error-startDateFieldCode').text(getPluginText('The start date field must have the type DATE', lang));
       }
       if (endDateFieldCode && resp.properties[endDateFieldCode]?.type !== "DATE") {
         $('#error-endDateFieldCode').text(getPluginText('The end date field must have the type DATE', lang));
+      }
+      if (timesheetFieldCode && resp.properties[timesheetFieldCode]?.type !== "FILE") {
+        $('#error-timesheetFieldCode').text(getPluginText('The timesheet data storage file field must have the type FILE', lang));
       }
       console.log(resp);
     }, function (error) {
@@ -59,6 +63,9 @@ jQuery.noConflict();
   }
   if (config.endDateFieldCode) {
     $('#endDateFieldCode').val(config.endDateFieldCode);
+  }
+  if (config.timesheetFieldCode) {
+    $('#timesheetFieldCode').val(config.timesheetFieldCode);
   }
   $('#plugin-language').val(config?.language ? config?.language : 'en');
 

@@ -1,4 +1,3 @@
-// create table element
 function convertJsonToHtmlTable(data) {
     try {
         let headerTabTxt = `<th></th>`;
@@ -37,7 +36,6 @@ function convertJsonToHtmlTable(data) {
         console.error(e);
     }
 }
-// call api
 function convertCsvToObject(csvData) {
     const data = csvData.trim().split('\n');
     data.pop();

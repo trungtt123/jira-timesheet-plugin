@@ -15,11 +15,9 @@ const pluginText = {
         en: 'Start date must be less than or equal to end date.',
         ja: '開始日には終了日より前の日付あるいは同じ日付を指定してください。'
     },
-    'You need to configure the 2 fieldcodes as startdate and enddate to use MF kintone-plugin-Timesheeet.': {
-        en: 'You need to configure the 2 fieldcodes as startdate and enddate to use MF kintone-plugin-Timesheeet.',
-        ja: `「MF kintone-plugin-Timeshee」のプラグインを使用できるために、
-      「開始日」と「終了日」のフィールドにフィールドコード値を設定しないといけないです。
-      「startdate」値と「enddate」値を固定してください。`
+    'You need to configure the 3 fieldcodes as start date, end date and timesheet data storage file to use MF kintone-plugin-Timesheeet.': {
+        en: 'You need to configure the 3 fieldcodes as start date, end date and timesheet data storage file to use MF kintone-plugin-Timesheeet.',
+        ja: `「MF kintone-plugin-Timesheet」のプラグインを利用するために、開始日、終了日、タイムシートのデータを保存するファイルの3つのフィールドコードを設定する必要があります。`
     },
     "The start date field must have the type DATE": {
         en: "The start date field must have the type DATE",
@@ -28,6 +26,10 @@ const pluginText = {
     "The end date field must have the type DATE": {
         en: "The end date field must have the type DATE",
         ja: "「終了日」フィールドは日付型を選択しないといけない。"
+    },
+    "The timesheet data storage file field must have the type FILE": {
+        en: "The timesheet data storage file field must have the type FILE",
+        ja: "「タイムシートのデータを保存するファイル」のフィールド型は「ファイル」型である。"
     },
     'Save': {
         en: 'Save',
@@ -45,9 +47,9 @@ const pluginText = {
         en: 'End date',
         ja: '終了日'
     },
-    'Timesheet data': {
-        en: 'Timesheet data',
-        ja: 'Timesheet data'
+    'Timesheet data storage file': {
+        en: 'Timesheet data storage file',
+        ja: 'タイムシートのデータを保存するファイル'
     },
     'Token': {
         en: 'Token',
@@ -85,13 +87,13 @@ const pluginText = {
         en: 'Submit button',
         ja: '送信ボタン'
     },
-    "If you haven't installed the start date and end date fields on the form, please set them up here.": {
-        en: "If you haven't installed the start date and end date fields on the form, please set them up here.",
-        ja: '「開始日」と「終了日」フィールドがフォームにインストールされていない場合は、ここで設定してください。'
+    "If you haven't installed the start date, end date and timesheet data storage file fields on the form, please set them up here.": {
+        en: "If you haven't installed the start date, end date and timesheet data storage file fields on the form, please set them up here.",
+        ja: "開始日、終了日、タイムシートのデータを保存するファイルのフィールドをフォームにインストールしていない場合は、ここで設定してください。"
     },
-    "If you have installed these 2 fields, start date and end date in the form, please enter their field codes below.": {
-        en: "If you have installed these 2 fields, start date and end date in the form, please enter their field codes below.",
-        ja: "フォームで「開始日」と「終了日」のフィールドをインストールした場合は、その２つのフィールドの設定内でフィールドコードを入力してください。"
+    "If you have installed these 3 fields, start date, end date and timesheet data storage file in the form, please enter their field codes below.": {
+        en: "If you have installed these 3 fields, start date, end date and timesheet data storage file in the form, please enter their field codes below.",
+        ja: "開始日、終了日、タイムシートのデータを保存するファイルの3つのフィールドをフォームにインストールしている場合は以下にフィールドコードを入力してください。"
     },
     "Field codes are duplicated.": {
         en: "Field codes are duplicated.",
