@@ -51,9 +51,9 @@ const pluginText = {
         en: 'Timesheet data storage file',
         ja: 'タイムシートのデータを保存するファイル'
     },
-    'Token': {
-        en: 'Token',
-        ja: 'トークン'
+    'Jira token': {
+        en: 'Jira token',
+        ja: 'Jiraトーケン'
     },
     'Show token': {
         en: 'Show token',
@@ -110,6 +110,10 @@ const pluginText = {
     "Language": {
         en: "Language",
         ja: "言語"
+    },
+    "Invalid token": {
+        en: "Invalid token",
+        ja: "無効トーケン"
     }
 }
 function getPluginText(text, lang) {

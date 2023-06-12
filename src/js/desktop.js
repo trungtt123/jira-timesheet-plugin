@@ -89,7 +89,7 @@ jQuery.noConflict();
       arr.forEach(element => {
         element.style.display = 'none';
       });
-      $(`#view-list-data-gaia table.recordlist-gaia.recordlist-manually-adjusted-gaia thead th:eq(${position})`).hide();
+      $(`#view-list-data-gaia table.recordlist-gaia thead th:eq(${position})`).hide();
     }
   })
   // event app record detail show
@@ -168,6 +168,9 @@ jQuery.noConflict();
         // call api get project cost data
         const apiUrl = timeSheetUrl + `/exportData.csv?start=${startDateValue}&end=${endDateValue}&allUsers=true&Apikey=${apiKey}`;
         proxyRequest(PLUGIN_ID, apiUrl, 'GET', {}, {}).then((result) => {
+          if (result.status.toString() === '401'){
+            alert(getPluginText('Invalid token', lang));
+          }
           let response = convertCsvToObject(result.body);
           timesheetData = response;
           if (Object.keys(response).length === 0) {
