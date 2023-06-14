@@ -44,17 +44,17 @@ async function getRecord(appId, recordId) {
 async function downloadAndReadKintoneFile(fileKey) {
     return new Promise((resolve, reject) => {
         const domainKintone = window.location.hostname;
-        var url = `https://${domainKintone}/k/v1/file.json?fileKey=${fileKey}`;
-        var xhr = new XMLHttpRequest();
+        let url = `https://${domainKintone}/k/v1/file.json?fileKey=${fileKey}`;
+        let xhr = new XMLHttpRequest();
         xhr.open('GET', url);
         xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
         xhr.responseType = 'blob';
         xhr.onload = function () {
             if (xhr.status === 200) {
-                var blob = xhr.response;
-                var reader = new FileReader();
+                let blob = xhr.response;
+                let reader = new FileReader();
                 reader.onloadend = function () {
-                    var fileData = reader.result;
+                    let fileData = reader.result;
                     resolve(fileData);
                 };
                 reader.onerror = function (error) {

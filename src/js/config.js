@@ -28,9 +28,9 @@ jQuery.noConflict();
       if (endDateFieldCode && resp.properties[endDateFieldCode]?.type !== "DATE") {
         $('#error-endDateFieldCode').text(getPluginText('The end date field must have the type DATE', lang));
       }
-      if (timesheetFieldCode && resp.properties[timesheetFieldCode]?.type !== "FILE") {
-        $('#error-timesheetFieldCode').text(getPluginText('The timesheet data storage file field must have the type FILE', lang));
-      }
+      // if (timesheetFieldCode && resp.properties[timesheetFieldCode]?.type !== "FILE") {
+      //   $('#error-timesheetFieldCode').text(getPluginText('The timesheet data storage file field must have the type FILE', lang));
+      // }
       console.log(resp);
     }, function (error) {
       // error
@@ -127,7 +127,7 @@ jQuery.noConflict();
       // success
       console.log(resp);
       console.log(resp.revision);
-      var body = {
+      let body = {
         'apps': [
           {
             'app': appId,
@@ -184,7 +184,7 @@ jQuery.noConflict();
       // success
       console.log(resp);
       console.log(resp.revision);
-      var body = {
+      let body = {
         'apps': [
           {
             'app': appId,
@@ -231,15 +231,61 @@ jQuery.noConflict();
       "properties": {}
     };
     body.properties[fieldCode] = {
-      "type": "FILE",
-      "label": displayName,
-      "code": fieldCode
+      "type": "SUBTABLE",
+      "fields": {},
+      "code": fieldCode,
+      "label": displayName
+    }
+    body.properties[fieldCode].fields[`${fieldCode}_project`] = {
+      'type': 'SINGLE_LINE_TEXT',
+      'code': `${fieldCode}_project`,
+      'label': 'Project'
+    }
+    body.properties[fieldCode].fields[`${fieldCode}_issueType`] = {
+      'type': 'SINGLE_LINE_TEXT',
+      'code': `${fieldCode}_issueType`,
+      'label': 'Issue Type'
+    }
+    body.properties[fieldCode].fields[`${fieldCode}_key`] = {
+      'type': 'SINGLE_LINE_TEXT',
+      'code': `${fieldCode}_key`,
+      'label': 'Key'
+    }
+    body.properties[fieldCode].fields[`${fieldCode}_summary`] = {
+      'type': 'SINGLE_LINE_TEXT',
+      'code': `${fieldCode}_summary`,
+      'label': 'Summary'
+    }
+    body.properties[fieldCode].fields[`${fieldCode}_priority`] = {
+      'type': 'SINGLE_LINE_TEXT',
+      'code': `${fieldCode}_priority`,
+      'label': 'Priority'
+    }
+    body.properties[fieldCode].fields[`${fieldCode}_dateAndTime`] = {
+      'type': 'DATETIME',
+      'code': `${fieldCode}_dateAndTime`,
+      'label': 'Date and time'
+    }
+    body.properties[fieldCode].fields[`${fieldCode}_displayName`] = {
+      'type': 'SINGLE_LINE_TEXT',
+      'code': `${fieldCode}_displayName`,
+      'label': 'Display Name'
+    }
+    body.properties[fieldCode].fields[`${fieldCode}_timeSpent`] = {
+      'type': 'NUMBER',
+      'code': `${fieldCode}_timeSpent`,
+      'label': 'Time spent (h)'
+    }
+    body.properties[fieldCode].fields[`${fieldCode}_workDescription`] = {
+      'type': 'SINGLE_LINE_TEXT',
+      'code': `${fieldCode}_workDescription`,
+      'label': 'Work description'
     }
     kintone.api(kintone.api.url('/k/v1/preview/app/form/fields', true), 'POST', body, function (resp) {
       // success
       console.log(resp);
       console.log(resp.revision);
-      var body = {
+      let body = {
         'apps': [
           {
             'app': appId,

@@ -63,10 +63,10 @@ jQuery.noConflict();
         alert(getPluginText('The end date field must have the type DATE', lang));
         return;
       }
-      if (appFormData.properties[timesheetFieldCode]?.type !== "FILE") {
-        alert(getPluginText('The timesheet data storage file field must have the type FILE', lang));
-        return;
-      }
+      // if (appFormData.properties[timesheetFieldCode]?.type !== "FILE") {
+      //   alert(getPluginText('The timesheet data storage file field must have the type FILE', lang));
+      //   return;
+      // }
     }
     catch (e) {
       console.error(e);
@@ -99,7 +99,7 @@ jQuery.noConflict();
 
     kintone.app.record.setFieldShown(startDateFieldCode, showStartDate);
     kintone.app.record.setFieldShown(endDateFieldCode, showEndDate);
-    kintone.app.record.setFieldShown(timesheetFieldCode, false);
+    // kintone.app.record.setFieldShown(timesheetFieldCode, false);
 
     let record = event.record;
 
@@ -142,9 +142,11 @@ jQuery.noConflict();
 
     kintone.app.record.setFieldShown(startDateFieldCode, showStartDate);
     kintone.app.record.setFieldShown(endDateFieldCode, showEndDate);
-    kintone.app.record.setFieldShown(timesheetFieldCode, false);
+    // kintone.app.record.setFieldShown(timesheetFieldCode, false);
 
     let record = event.record;
+    console.log(record);
+    // record['text'].value = '123';
     let startDateValue = record[config?.startDateFieldCode].value;
     let endDateValue = record[config?.endDateFieldCode].value;
 
@@ -168,7 +170,7 @@ jQuery.noConflict();
         // call api get project cost data
         const apiUrl = timeSheetUrl + `/exportData.csv?start=${startDateValue}&end=${endDateValue}&allUsers=true&Apikey=${apiKey}`;
         proxyRequest(PLUGIN_ID, apiUrl, 'GET', {}, {}).then((result) => {
-          if (result.status.toString() === '401'){
+          if (result.status.toString() === '401') {
             alert(getPluginText('Invalid token', lang));
           }
           let response = convertCsvToObject(result.body);
@@ -216,20 +218,46 @@ jQuery.noConflict();
     // Lấy dữ liệu của bản ghi mới được tạo
     try {
       let record = event.record;
-      let fileData = timesheetData ? JSON.stringify(timesheetData) : '';
-      let blob = new Blob([fileData], { type: 'text/plain' });
-      let formData = new FormData();
-      formData.append('__REQUEST_TOKEN__', kintone.getRequestToken());
-      formData.append('file', blob, 'mf-jira-timesheet.txt');
-      let fileKey = (await uploadFile(formData)).fileKey;
+      console.log(record);
+      let startDateValue = record[`${startDateFieldCode}`]?.value;
+      let endDateValue = record[`${endDateFieldCode}`]?.value;
+      const apiUrl = timeSheetUrl + `/exportData.csv?start=${startDateValue}&end=${endDateValue}&allUsers=true&Apikey=${apiKey}`;
+      let result = await proxyRequest(PLUGIN_ID, apiUrl, 'GET', {}, {});
+      console.log('timesheetdata', result);
+      if (result.status.toString() === '401') {
+        alert(getPluginText('Invalid token', lang));
+      }
+      else {
+        let response = convertCsvToArray(result.body);
+        console.log('convertCsvToArray', response);
+        
+
+        // timesheetData = response;
+        // if (Object.keys(response).length === 0) {
+        //   $timeSheetStatus.text(getPluginText('No data', lang));
+        //   $timeSheetStatus.show();
+        // }
+        // else {
+        //   $projectCostTable.html(convertJsonToHtmlTable(response));
+        //   $projectCostTable.show();
+        // }
+        $submitButton.show();
+      }
+      $loading.hide();
+      // let fileData = timesheetData ? JSON.stringify(timesheetData) : '';
+      // let blob = new Blob([fileData], { type: 'text/plain' });
+      // let formData = new FormData();
+      // formData.append('__REQUEST_TOKEN__', kintone.getRequestToken());
+      // formData.append('file', blob, 'mf-jira-timesheet.txt');
+      // let fileKey = (await uploadFile(formData)).fileKey;
       let body = {
         "app": appId,
         "id": record.$id.value,
         "record": {}
       }
-      body['record'][`${config.timesheetFieldCode}`] = {
-        "value": [{ "fileKey": fileKey }]
-      };
+      // body['record'][`${config.timesheetFieldCode}`] = {
+      //   "value": [{ "fileKey": fileKey }]
+      // };
       await updateRecord(body);
     }
     catch (e) {
