@@ -27,8 +27,8 @@ const pluginText = {
         en: "The end date field must have the type DATE",
         ja: "「終了日」フィールドは日付型を選択しないといけない。"
     },
-    "The timesheet data storage file field must have the type FILE": {
-        en: "The timesheet data storage file field must have the type FILE",
+    "The timesheet data storage field must have the type SUBTABLE": {
+        en: "The timesheet data storage field must have the type SUBTABLE",
         ja: "「タイムシートのデータを保存するファイル」のフィールド型は「ファイル」型である。"
     },
     'Save': {
@@ -47,9 +47,9 @@ const pluginText = {
         en: 'End date',
         ja: '終了日'
     },
-    'Timesheet data storage file': {
-        en: 'Timesheet data storage file',
-        ja: 'タイムシートのデータを保存するファイル'
+    'Timesheet data storage': {
+        en: 'Timesheet data storage',
+        ja: 'Timesheet data storage'
     },
     'Jira token': {
         en: 'Jira token',
@@ -87,13 +87,13 @@ const pluginText = {
         en: 'Submit button',
         ja: '送信ボタン'
     },
-    "If you haven't installed the start date, end date and timesheet data storage file fields on the form, please set them up here.": {
-        en: "If you haven't installed the start date, end date and timesheet data storage file fields on the form, please set them up here.",
-        ja: "開始日、終了日、タイムシートのデータを保存するファイルのフィールドをフォームにインストールしていない場合は、ここで設定してください。"
+    "If you haven't installed the start date, end date and timesheet data storage fields on the form, please set them up here.": {
+        en: "If you haven't installed the start date, end date and timesheet data storage fields on the form, please set them up here.",
+        ja: "If you haven't installed the start date, end date and timesheet data storage fields on the form, please set them up here."
     },
-    "If you have installed these 3 fields, start date, end date and timesheet data storage file in the form, please enter their field codes below.": {
-        en: "If you have installed these 3 fields, start date, end date and timesheet data storage file in the form, please enter their field codes below.",
-        ja: "開始日、終了日、タイムシートのデータを保存するファイルの3つのフィールドをフォームにインストールしている場合は以下にフィールドコードを入力してください。"
+    "If you have installed these 3 fields, start date, end date and timesheet data storage in the form, please enter their field codes below.": {
+        en: "If you have installed these 3 fields, start date, end date and timesheet data storage in the form, please enter their field codes below.",
+        ja: "If you have installed these 3 fields, start date, end date and timesheet data storage in the form, please enter their field codes below."
     },
     "Field codes are duplicated.": {
         en: "Field codes are duplicated.",

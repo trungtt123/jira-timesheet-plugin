@@ -1,92 +1,143 @@
 jQuery.noConflict();
 
-(function ($, PLUGIN_ID) {
+(async function ($, PLUGIN_ID) {
   'use strict';
   console.log(kintone.plugin.app.getConfig(PLUGIN_ID));
   const config = kintone.plugin.app.getConfig(PLUGIN_ID);
   const appId = kintone.app.getId();
   const lang = config?.language ? config?.language : 'en';
+  let appData;
   function initConfigLayout() {
     $(".plugin-text-field").each(function () {
       let text = $(this).text();
       $(this).text(getPluginText(text, lang));
     });
   }
-  function getAppData() {
-    const body = {
-      'app': appId
+  async function updateSelectOption(selects) {
+    appData = await getAppData(appId);
+    console.log('appData', appData)
+    let listFields = Object.keys(appData.properties);
+    let dateField = [''].concat(listFields?.filter(o => appData.properties[o]?.type === 'DATE'));
+    let subtableField = [''].concat(listFields?.filter(o => appData.properties[o]?.type === 'SUBTABLE'));
+    if (selects?.includes('startDateFieldCode')) {
+      $('#startDateFieldCode').empty();
+      for (let date of dateField) {
+        $('#startDateFieldCode').append($('<option>', {
+          value: date,
+          text: date
+        }));
+      }
     }
-    kintone.api(kintone.api.url('/k/v1/app/form/fields', true), 'GET', body, function (resp) {
-      // success
-      console.log(config);
-      const startDateFieldCode = config?.startDateFieldCode;
-      const endDateFieldCode = config?.endDateFieldCode;
-      const timesheetFieldCode = config?.timesheetFieldCode;
-      if (startDateFieldCode && resp.properties[startDateFieldCode]?.type !== "DATE") {
-        $('#error-startDateFieldCode').text(getPluginText('The start date field must have the type DATE', lang));
+    if (selects?.includes('endDateFieldCode')) {
+      $('#endDateFieldCode').empty();
+      for (let date of dateField) {
+        $('#endDateFieldCode').append($('<option>', {
+          value: date,
+          text: date
+        }));
       }
-      if (endDateFieldCode && resp.properties[endDateFieldCode]?.type !== "DATE") {
-        $('#error-endDateFieldCode').text(getPluginText('The end date field must have the type DATE', lang));
+    }
+    if (selects?.includes('timesheetFieldCode')) {
+      $('#timesheetFieldCode').empty();
+      for (let subtable of subtableField) {
+        $('#timesheetFieldCode').append($('<option>', {
+          value: subtable,
+          text: subtable
+        }));
       }
-      // if (timesheetFieldCode && resp.properties[timesheetFieldCode]?.type !== "FILE") {
-      //   $('#error-timesheetFieldCode').text(getPluginText('The timesheet data storage file field must have the type FILE', lang));
-      // }
-      console.log(resp);
-    }, function (error) {
-      // error
-      console.error(error);
-    });
+    }
   }
+  await updateSelectOption(['startDateFieldCode', 'endDateFieldCode', 'timesheetFieldCode']);
+  $('#timesheetFieldCode').change(function () {
+    $('#timesheetProject, #timesheetIssueType, #timesheetKey, #timesheetSummary, #timesheetPriority, #timesheetDisplayname, #timesheetWorkDescription,#timesheetDateTime,#timesheetTimespent').empty();
+    let timesheetFieldCode = $('#timesheetFieldCode').val();
+    if (!timesheetFieldCode) return;
+
+    let listFieldsOfTimesheet = appData.properties[timesheetFieldCode]?.fields;
+    let listFieldName = Object.keys(listFieldsOfTimesheet);
+
+    let textField = [''].concat(listFieldName?.filter(o => listFieldsOfTimesheet[o]?.type === 'SINGLE_LINE_TEXT'));
+
+    let dateTimeField = [''].concat(listFieldName?.filter(o => listFieldsOfTimesheet[o]?.type === 'DATETIME'));
+
+    let numberField = [''].concat(listFieldName?.filter(o => listFieldsOfTimesheet[o]?.type === 'NUMBER'));
+
+
+    for (let text of textField) {
+      $('#timesheetProject, #timesheetIssueType, #timesheetKey, #timesheetSummary, #timesheetPriority, #timesheetDisplayname, #timesheetWorkDescription').append($('<option>', {
+        value: text,
+        text: text
+      }));
+    }
+    for (let dateTime of dateTimeField) {
+      $('#timesheetDateTime').append($('<option>', {
+        value: dateTime,
+        text: dateTime
+      }));
+    }
+    for (let number of numberField) {
+      $('#timesheetTimespent').append($('<option>', {
+        value: number,
+        text: number
+      }));
+    }
+  });
+  $('#token').val(config?.token);
+  $('#startDateFieldCode').val(config?.startDateFieldCode);
+  $('#endDateFieldCode').val(config?.endDateFieldCode);
+  $('#timesheetFieldCode').val(config?.timesheetFieldCode);
+  $('#plugin-language').val(config?.language ? config?.language : 'en');
+  $('#timesheetFieldCode').trigger('change');
+  $('#timesheetProject').val(config?.timesheetProject);
+  $('#timesheetIssueType').val(config?.timesheetIssueType);
+  $('#timesheetKey').val(config?.timesheetKey);
+  $('#timesheetSummary').val(config?.timesheetSummary);
+  $('#timesheetPriority').val(config?.timesheetPriority);
+  $('#timesheetDateTime').val(config?.timesheetDateTime);
+  $('#timesheetDisplayname').val(config?.timesheetDisplayname);
+  $('#timesheetTimespent').val(config?.timesheetTimespent);
+  $('#timesheetWorkDescription').val(config?.timesheetWorkDescription);
+
+
   initConfigLayout();
-  getAppData();
+
   let $form = $('.js-submit-settings');
   let $cancelButton = $('.js-cancel-button');
-  let $token = $('#token');
   let $showToken = $('#showToken');
   if (!($form.length > 0 && $cancelButton.length > 0)) {
     throw new Error('Required elements do not exist.');
   }
-  if (config.token) {
-    $token.val(config.token);
-  }
-  if (config.showStartDate === 'true') {
-    $('#showStartDate').prop("checked", true)
-  }
-  if (config.showEndDate === 'true') {
-    $('#showEndDate').prop("checked", true)
-  }
-  if (config.showSubmitButton === 'true') {
-    $('#showSubmitButton').prop("checked", true)
-  }
-  if (config.startDateFieldCode) {
-    $('#startDateFieldCode').val(config.startDateFieldCode);
-  }
-  if (config.endDateFieldCode) {
-    $('#endDateFieldCode').val(config.endDateFieldCode);
-  }
-  if (config.timesheetFieldCode) {
-    $('#timesheetFieldCode').val(config.timesheetFieldCode);
-  }
-  $('#plugin-language').val(config?.language ? config?.language : 'en');
 
   $('#btnSave').on('click', function (e) {
     e.preventDefault();
-    let token = $token.val();
-    let showStartDate = $('#showStartDate').prop("checked").toString();
-    let showEndDate = $('#showEndDate').prop("checked").toString();
-    let showSubmitButton = $('#showSubmitButton').prop("checked").toString();
+    let token = $('#token').val();
     let startDateFieldCode = $('#startDateFieldCode').val();
     let endDateFieldCode = $('#endDateFieldCode').val();
     let timesheetFieldCode = $('#timesheetFieldCode').val();
+    let timesheetProject = $('#timesheetProject').val();
+    let timesheetIssueType = $('#timesheetIssueType').val();
+    let timesheetKey = $('#timesheetKey').val();
+    let timesheetSummary = $('#timesheetSummary').val();
+    let timesheetPriority = $('#timesheetPriority').val();
+    let timesheetDateTime = $('#timesheetDateTime').val();
+    let timesheetDisplayname = $('#timesheetDisplayname').val();
+    let timesheetTimespent = $('#timesheetTimespent').val();
+    let timesheetWorkDescription = $('#timesheetWorkDescription').val();
     let language = $('#plugin-language').val();
     let config = {
       token,
-      showStartDate,
-      showEndDate,
-      showSubmitButton,
       startDateFieldCode,
       endDateFieldCode,
       timesheetFieldCode,
+      timesheetProject,
+      timesheetIssueType,
+      timesheetKey,
+      timesheetSummary,
+      timesheetPriority,
+      timesheetDateTime,
+      timesheetDisplayname,
+      timesheetTimespent,
+      timesheetWorkDescription,
       language
     }
     console.log('config', config);
@@ -123,39 +174,21 @@ jQuery.noConflict();
       "defaultNowValue": true,
       "required": true
     }
-    kintone.api(kintone.api.url('/k/v1/preview/app/form/fields', true), 'POST', body, function (resp) {
-      // success
-      console.log(resp);
-      console.log(resp.revision);
-      let body = {
-        'apps': [
-          {
-            'app': appId,
-            'revision': resp.revision
-          }
-        ]
-      };
-      kintone.api(kintone.api.url('/k/v1/preview/app/deploy', true), 'POST', body, function (resp) {
-        // success
-        console.log(resp);
-        alert(getPluginText('Create success', lang));
-        $('#startDateDisplayName').val('');
-        $('#startDateFC').val('');
-        $('#error-displayNameStartDate').text('');
-        $('#error-startDateFC').text('');
-        $('#startDateFieldCode').val(fieldCode);
-      }, function (error) {
-        // error
-        alert(getPluginText('Field codes are duplicated.', lang));
-        console.log(error);
-      });
-    }, function (error) {
-      // error
+    deployApp(appId, body).then(async () => {
+      await sleep(10);
+      await updateSelectOption(['startDateFieldCode']);
+      alert(getPluginText('Create success', lang));
+      $('#startDateDisplayName').val('');
+      $('#startDateFC').val('');
+      $('#error-displayNameStartDate').text('');
+      $('#error-startDateFC').text('');
+      $('#startDateFieldCode').val(fieldCode);
+    }).catch((e) => {
       alert(getPluginText('Field codes are duplicated.', lang));
-      console.log(error);
+      console.log(e)
     });
   })
-  $('#btnCreateEndDate').on('click', function (e) {
+  $('#btnCreateEndDate').on('click', async function (e) {
     e.preventDefault();
     let displayName = $('#endDateDisplayName').val();
     let fieldCode = $('#endDateFC').val();
@@ -180,36 +213,18 @@ jQuery.noConflict();
       "defaultNowValue": true,
       "required": true
     }
-    kintone.api(kintone.api.url('/k/v1/preview/app/form/fields', true), 'POST', body, function (resp) {
-      // success
-      console.log(resp);
-      console.log(resp.revision);
-      let body = {
-        'apps': [
-          {
-            'app': appId,
-            'revision': resp.revision
-          }
-        ]
-      };
-      kintone.api(kintone.api.url('/k/v1/preview/app/deploy', true), 'POST', body, function (resp) {
-        // success
-        console.log(resp);
-        alert(getPluginText('Create success', lang));
-        $('#endDateDisplayName').val('');
-        $('#endDateFC').val('');
-        $('#error-displayNameEndDate').text('');
-        $('#error-endDateFC').text('');
-        $('#endDateFieldCode').val(fieldCode);
-      }, function (error) {
-        // error
-        alert(getPluginText('Field codes are duplicated.', lang));
-        console.log(error);
-      });
-    }, function (error) {
-      // error
+    deployApp(appId, body).then(async () => {
+      await sleep(10);
+      await updateSelectOption(['endDateFieldCode']);
+      alert(getPluginText('Create success', lang));
+      $('#endDateDisplayName').val('');
+      $('#endDateFC').val('');
+      $('#error-displayNameEndDate').text('');
+      $('#error-endDateFC').text('');
+      $('#endDateFieldCode').val(fieldCode);
+    }).catch((e) => {
       alert(getPluginText('Field codes are duplicated.', lang));
-      console.log(error);
+      console.log(e)
     });
   })
   $('#btnCreateTimesheet').on('click', function (e) {
@@ -232,94 +247,88 @@ jQuery.noConflict();
     };
     body.properties[fieldCode] = {
       "type": "SUBTABLE",
-      "fields": {},
+      "fields": {
+        [`${fieldCode}_project`]: {
+          'type': 'SINGLE_LINE_TEXT',
+          'code': `${fieldCode}_project`,
+          'label': 'Project'
+        },
+        [`${fieldCode}_issueType`]: {
+          'type': 'SINGLE_LINE_TEXT',
+          'code': `${fieldCode}_issueType`,
+          'label': 'Issue Type'
+        },
+        [`${fieldCode}_key`]: {
+          'type': 'SINGLE_LINE_TEXT',
+          'code': `${fieldCode}_key`,
+          'label': 'Key'
+        },
+        [`${fieldCode}_summary`]: {
+          'type': 'SINGLE_LINE_TEXT',
+          'code': `${fieldCode}_summary`,
+          'label': 'Summary'
+        },
+        [`${fieldCode}_priority`]: {
+          'type': 'SINGLE_LINE_TEXT',
+          'code': `${fieldCode}_priority`,
+          'label': 'Priority'
+        },
+        [`${fieldCode}_dateAndTime`]: {
+          'type': 'DATETIME',
+          'code': `${fieldCode}_dateAndTime`,
+          'label': 'Date and time'
+        },
+        [`${fieldCode}_displayName`]: {
+          'type': 'SINGLE_LINE_TEXT',
+          'code': `${fieldCode}_displayName`,
+          'label': 'Display Name'
+        },
+        [`${fieldCode}_timeSpent`]: {
+          'type': 'NUMBER',
+          'code': `${fieldCode}_timeSpent`,
+          'label': 'Time spent (h)'
+        },
+        [`${fieldCode}_workDescription`]: {
+          'type': 'SINGLE_LINE_TEXT',
+          'code': `${fieldCode}_workDescription`,
+          'label': 'Work description'
+        }
+      },
       "code": fieldCode,
       "label": displayName
     }
-    body.properties[fieldCode].fields[`${fieldCode}_project`] = {
-      'type': 'SINGLE_LINE_TEXT',
-      'code': `${fieldCode}_project`,
-      'label': 'Project'
-    }
-    body.properties[fieldCode].fields[`${fieldCode}_issueType`] = {
-      'type': 'SINGLE_LINE_TEXT',
-      'code': `${fieldCode}_issueType`,
-      'label': 'Issue Type'
-    }
-    body.properties[fieldCode].fields[`${fieldCode}_key`] = {
-      'type': 'SINGLE_LINE_TEXT',
-      'code': `${fieldCode}_key`,
-      'label': 'Key'
-    }
-    body.properties[fieldCode].fields[`${fieldCode}_summary`] = {
-      'type': 'SINGLE_LINE_TEXT',
-      'code': `${fieldCode}_summary`,
-      'label': 'Summary'
-    }
-    body.properties[fieldCode].fields[`${fieldCode}_priority`] = {
-      'type': 'SINGLE_LINE_TEXT',
-      'code': `${fieldCode}_priority`,
-      'label': 'Priority'
-    }
-    body.properties[fieldCode].fields[`${fieldCode}_dateAndTime`] = {
-      'type': 'DATETIME',
-      'code': `${fieldCode}_dateAndTime`,
-      'label': 'Date and time'
-    }
-    body.properties[fieldCode].fields[`${fieldCode}_displayName`] = {
-      'type': 'SINGLE_LINE_TEXT',
-      'code': `${fieldCode}_displayName`,
-      'label': 'Display Name'
-    }
-    body.properties[fieldCode].fields[`${fieldCode}_timeSpent`] = {
-      'type': 'NUMBER',
-      'code': `${fieldCode}_timeSpent`,
-      'label': 'Time spent (h)'
-    }
-    body.properties[fieldCode].fields[`${fieldCode}_workDescription`] = {
-      'type': 'SINGLE_LINE_TEXT',
-      'code': `${fieldCode}_workDescription`,
-      'label': 'Work description'
-    }
-    kintone.api(kintone.api.url('/k/v1/preview/app/form/fields', true), 'POST', body, function (resp) {
-      // success
-      console.log(resp);
-      console.log(resp.revision);
-      let body = {
-        'apps': [
-          {
-            'app': appId,
-            'revision': resp.revision
-          }
-        ]
-      };
-      kintone.api(kintone.api.url('/k/v1/preview/app/deploy', true), 'POST', body, function (resp) {
-        // success
-        console.log(resp);
-        alert(getPluginText('Create success', lang));
-        $('#timesheetDisplayName').val('');
-        $('#timesheetFC').val('');
-        $('#error-displayNameTimesheet').text('');
-        $('#error-timesheetFC').text('');
-        $('#timesheetFieldCode').val(fieldCode);
-      }, function (error) {
-        // error
-        alert(getPluginText('Field codes are duplicated.', lang));
-        console.log(error);
-      });
-    }, function (error) {
-      // error
+
+    deployApp(appId, body).then(async () => {
+      await sleep(10);
+      await updateSelectOption(['timesheetFieldCode']);
+      alert(getPluginText('Create success', lang));
+      $('#timesheetDisplayName').val('');
+      $('#timesheetFC').val('');
+      $('#error-displayNameTimesheet').text('');
+      $('#error-timesheetFC').text('');
+      $('#timesheetFieldCode').val(fieldCode);
+      $('#timesheetFieldCode').trigger('change');
+      $('#timesheetProject').val(`${fieldCode}_project`);
+      $('#timesheetIssueType').val(`${fieldCode}_issueType`);
+      $('#timesheetKey').val(`${fieldCode}_key`);
+      $('#timesheetSummary').val(`${fieldCode}_summary`);
+      $('#timesheetPriority').val(`${fieldCode}_priority`);
+      $('#timesheetDateTime').val(`${fieldCode}_dateAndTime`);
+      $('#timesheetDisplayname').val(`${fieldCode}_displayName`);
+      $('#timesheetTimespent').val(`${fieldCode}_timeSpent`);
+      $('#timesheetWorkDescription').val(`${fieldCode}_workDescription`);
+    }).catch((e) => {
       alert(getPluginText('Field codes are duplicated.', lang));
-      console.log(error);
+      console.log(e)
     });
   })
   $showToken.change(function (e) {
     console.log(e.target.checked);
     if (e.target.checked) {
-      $token.prop("type", "text");
+      $('#token').prop("type", "text");
     }
     else {
-      $token.prop("type", "password");
+      $('#token').prop("type", "password");
     }
   });
 })(jQuery, kintone.$PLUGIN_ID);

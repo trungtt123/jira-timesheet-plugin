@@ -33,22 +33,26 @@
   background-color: #1d6fa5;
   cursor: pointer;
 }
-#plugin-language {
-  width: 200px;
-  padding: 10px;
+.plugin-select {
+  width: 18.5em;
+  padding: 13px;
   border: 1px solid #ccc;
   border-radius: 4px;
   background-color: #fff;
   color: #333;
   font-size: 16px;
 }
-#plugin-language option {
+.plugin-sub-select {
+  width: 9em;
+  padding: 5px;
+}
+.plugin-select option {
   padding: 5px;
   background-color: #fff;
   color: #333;
   font-size: 14px;
 }
-#plugin-language option:checked {
+.plugin-select option:checked {
   background-color: #f0f0f0;
   font-weight: bold;
 }

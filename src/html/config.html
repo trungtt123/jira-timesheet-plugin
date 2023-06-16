@@ -8,7 +8,8 @@
         <label for="showToken" class="plugin-text-field">Show token</label>
       </div>
     </div>
-    <p class="plugin-text-field">If you haven't installed the start date, end date and timesheet data storage file fields on the form, please set them up here.</p>
+    <p class="plugin-text-field">If you haven't installed the start date, end date and timesheet data storage fields on
+      the form, please set them up here.</p>
     <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
       <span style="width: 100px; display: inline-block;" class="text-bold plugin-text-field">Start date</span>
       <div style="display: flex; flex-direction: column; margin-right: 5px">
@@ -42,7 +43,8 @@
       </div>
     </div>
     <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
-      <span style="width: 100px; display: inline-block;" class="text-bold plugin-text-field">Timesheet data storage file</span>
+      <span style="width: 100px; display: inline-block;" class="text-bold plugin-text-field">Timesheet data
+        storage</span>
       <div style="display: flex; flex-direction: column; margin-right: 5px">
         <label for="timesheetDisplayName" class="plugin-text-field">Display name</label>
         <input type="text" name="timesheetDisplayName" id="timesheetDisplayName" class="kintoneplugin-input-text">
@@ -57,12 +59,16 @@
         <button id="btnCreateTimesheet" class="plugin-text-field btn-create-field">Create</button>
       </div>
     </div>
-    <p class="plugin-text-field">If you have installed these 3 fields, start date, end date and timesheet data storage file in the form, please enter their field codes below.</p>
+    <p class="plugin-text-field">If you have installed these 3 fields, start date, end date and timesheet data storage
+      in the form, please enter their field codes below.</p>
     <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
       <span style="width: 100px; display: inline-block;" class="text-bold plugin-text-field">Start date</span>
       <div style="display: flex; flex-direction: column; margin-right: 5px">
         <label for="startDateFieldCode" class="plugin-text-field">Field code</label>
-        <input type="text" name="startDateFieldCode" id="startDateFieldCode" class="kintoneplugin-input-text">
+        <!-- <input type="text" name="startDateFieldCode" id="startDateFieldCode" class="kintoneplugin-input-text"> -->
+        <select class="plugin-select" id="startDateFieldCode" name="startDateFieldCode">
+          <!-- <option value=""></option>  -->
+        </select>
         <div id="error-startDateFieldCode" class="text-error"></div>
       </div>
     </div>
@@ -70,20 +76,95 @@
       <span style="width: 100px; display: inline-block;" class="text-bold plugin-text-field">End date</span>
       <div style="display: flex; flex-direction: column; margin-right: 5px">
         <label for="endDateFieldCode" class="plugin-text-field">Field code</label>
-        <input type="text" name="endDateFieldCode" id="endDateFieldCode" class="kintoneplugin-input-text">
+        <!-- <input type="text" name="endDateFieldCode" id="endDateFieldCode" class="kintoneplugin-input-text"> -->
+        <select class="plugin-select" id="endDateFieldCode" name="endDateFieldCode">
+          <!-- <option value=""></option> -->
+        </select>
         <div id="error-endDateFieldCode" class="text-error"></div>
       </div>
     </div>
     <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
-      <span style="width: 100px; display: inline-block;" class="text-bold plugin-text-field">Timesheet data storage file</span>
+      <span style="width: 100px; display: inline-block;" class="text-bold">Timesheet data storage</span>
       <div style="display: flex; flex-direction: column; margin-right: 5px">
         <label for="timesheetFieldCode" class="plugin-text-field">Field code</label>
-        <input type="text" name="timesheetFieldCode" id="timesheetFieldCode" class="kintoneplugin-input-text">
+        <!-- <input type="text" name="timesheetFieldCode" id="timesheetFieldCode" class="kintoneplugin-input-text"> -->
+        <select class="plugin-select" id="timesheetFieldCode" name="timesheetFieldCode">
+          <!-- <option value=""></option> -->
+        </select>
         <div id="error-timesheetFieldCode" class="text-error"></div>
+        <div style="display: flex; flex-direction: row;">
+          <div style="display: flex; flex-direction: column; margin-right: 5px">
+            <label for="timesheetProject" class="">Project</label>
+            <select class="plugin-select plugin-sub-select" id="timesheetProject" name="timesheetProject">
+              <!-- <option value="">None</option> -->
+            </select>
+            <div id="error-timesheetProject" class="text-error"></div>
+          </div>
+          <div style="display: flex; flex-direction: column; margin-right: 5px">
+            <label for="timesheetIssueType" class="">Issue type</label>
+            <select class="plugin-select plugin-sub-select" id="timesheetIssueType" name="timesheetIssueType">
+              <!-- <option value="">None</option> -->
+            </select>
+            <div id="error-timesheetIssueType" class="text-error"></div>
+          </div>
+          <div style="display: flex; flex-direction: column; margin-right: 5px">
+            <label for="timesheetKey" class="">Key</label>
+            <select class="plugin-select plugin-sub-select" id="timesheetKey" name="timesheetKey">
+              <!-- <option value="">None</option> -->
+            </select>
+            <div id="error-timesheetKey" class="text-error"></div>
+          </div>
+          <div style="display: flex; flex-direction: column; margin-right: 5px">
+            <label for="timesheetSummary" class="">Summary</label>
+            <select class="plugin-select plugin-sub-select" id="timesheetSummary" name="timesheetSummary">
+              <!-- <option value="">None</option> -->
+            </select>
+            <div id="error-timesheetSummary" class="text-error"></div>
+          </div>
+          <div style="display: flex; flex-direction: column; margin-right: 5px">
+            <label for="timesheetPriority" class="">Priority</label>
+            <select class="plugin-select plugin-sub-select" id="timesheetPriority" name="timesheetPriority">
+              <!-- <option value="">None</option> -->
+            </select>
+            <div id="error-timesheetPriority" class="text-error"></div>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: row;">
+          <div style="display: flex; flex-direction: column; margin-right: 5px">
+            <label for="timesheetDateTime" class="">Date and time</label>
+            <select class="plugin-select plugin-sub-select" id="timesheetDateTime" name="timesheetDateTime">
+              <!-- <option value="">None</option> -->
+            </select>
+            <div id="error-timesheetDateTime" class="text-error"></div>
+          </div>
+          <div style="display: flex; flex-direction: column; margin-right: 5px">
+            <label for="timesheetDisplayname" class="">Display name</label>
+            <select class="plugin-select plugin-sub-select" id="timesheetDisplayname" name="timesheetDisplayname">
+              <!-- <option value="">None</option> -->
+            </select>
+            <div id="error-timesheetDisplayname" class="text-error"></div>
+          </div>
+          <div style="display: flex; flex-direction: column; margin-right: 5px">
+            <label for="timesheetTimespent" class="">Time spent</label>
+            <select class="plugin-select plugin-sub-select" id="timesheetTimespent" name="timesheetTimespent">
+              <!-- <option value="">None</option> -->
+            </select>
+            <div id="error-timesheetTimespent" class="text-error"></div>
+          </div>
+          <div style="display: flex; flex-direction: column; margin-right: 5px">
+            <label for="timesheetWorkDescription" class="">Work description</label>
+            <select class="plugin-select plugin-sub-select" id="timesheetWorkDescription" name="timesheetWorkDescription">
+              <!-- <option value="">None</option> -->
+            </select>
+            <div id="error-timesheetWorkDescription" class="text-error"></div>
+          </div>
+        </div>
       </div>
     </div>
-    <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
-      <span style="width: 100px; display: inline-block;" class="text-bold plugin-text-field">Configure plugin display</span>
+
+    <!-- <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
+      <span style="width: 100px; display: inline-block;" class="text-bold plugin-text-field">Configure plugin
+        display</span>
       <div style="margin-right: 10px;">
         <input type="checkbox" name="showStartDate" id="showStartDate">
         <label for="showStartDate" class="plugin-text-field">Start date</label>
@@ -96,17 +177,18 @@
         <input type="checkbox" name="showSubmitButton" value="showSubmitButton" id="showSubmitButton">
         <label for="showSubmitButton" class="plugin-text-field">Submit button</label>
       </div>
-    </div>
+    </div> -->
     <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
       <span style="width: 100px; display: inline-block;" class="text-bold plugin-text-field">Language</span>
-      <select id="plugin-language">
+      <select class="plugin-select" id="plugin-language">
         <option value="en">English</option>
         <option value="ja">Japanese</option>
       </select>
-      
+
     </div>
     <div style="margin-top: 20px">
-      <button type="button" class="js-cancel-button kintoneplugin-button-dialog-cancel plugin-text-field">Cancel</button>
+      <button type="button"
+        class="js-cancel-button kintoneplugin-button-dialog-cancel plugin-text-field">Cancel</button>
       <button class="kintoneplugin-button-dialog-ok plugin-text-field" id="btnSave">Save</button>
     </div>
   </form>

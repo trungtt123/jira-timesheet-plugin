@@ -91,3 +91,31 @@ async function getAppData(appId) {
         });
     });
 }
+async function deployApp(appId, body) {
+    return new Promise(function(resolve, reject) {  
+      kintone.api(kintone.api.url('/k/v1/preview/app/form/fields', true), 'POST', body, function(resp) {
+        console.log('resp', resp)
+        let deployBody = {
+          'apps': [
+            {
+              'app': appId,
+              'revision': resp.revision
+            }
+          ]
+        };
+        kintone.api(kintone.api.url('/k/v1/preview/app/deploy', true), 'POST', deployBody, async function(resp) {
+          // success
+          resolve(resp);
+        }, function(error) {
+          // error
+          console.log(error);
+          reject(error);
+        });
+      }, function(error) {
+        // error
+        console.log(error);
+        reject(error);
+      });
+    });
+  }
+  

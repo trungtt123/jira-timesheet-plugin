@@ -2,7 +2,7 @@ jQuery.noConflict();
 
 (async function ($, PLUGIN_ID) {
   'use strict';
-  let config = kintone.plugin.app.getConfig(PLUGIN_ID);
+  const config = kintone.plugin.app.getConfig(PLUGIN_ID);
   console.log(config);
   const appId = kintone.app.getId();
   const lang = config?.language ? config?.language : 'en';
@@ -92,58 +92,8 @@ jQuery.noConflict();
       $(`#view-list-data-gaia table.recordlist-gaia thead th:eq(${position})`).hide();
     }
   })
-  // event app record detail show
-  kintone.events.on('app.record.detail.show', async function (event) {
-    clearPluginLayout();
-    initPluginLayout();
 
-    kintone.app.record.setFieldShown(startDateFieldCode, showStartDate);
-    kintone.app.record.setFieldShown(endDateFieldCode, showEndDate);
-    // kintone.app.record.setFieldShown(timesheetFieldCode, false);
-
-    let record = event.record;
-
-    let $timeSheetStatus = $('#timeSheetStatus');
-    let $projectCostTable = $('#projectCostTable');
-    let $loading = $('#loading');
-
-    $timeSheetStatus.hide();
-    $projectCostTable.hide();
-    $loading.show();
-    console.log('record', record);
-    let fileKey = record[`${timesheetFieldCode}`].value[0].fileKey;
-    downloadAndReadKintoneFile(fileKey).then((response) => {
-      if (isJSON(response)) {
-        response = JSON.parse(response);
-        if (Object.keys(response).length === 0) {
-          $timeSheetStatus.text(getPluginText('No data', lang));
-          $timeSheetStatus.show();
-        }
-        else {
-          $projectCostTable.html(convertJsonToHtmlTable(response));
-          $projectCostTable.show();
-        }
-      }
-      else {
-        $timeSheetStatus.text(getPluginText('No data', lang));
-        $timeSheetStatus.show();
-      }
-    }).catch((e) => {
-      console.error(e);
-      $timeSheetStatus.text(getPluginText('No data', lang));
-      $timeSheetStatus.show();
-    }).finally(() => {
-      $loading.hide();
-    });
-  });
   kintone.events.on(['app.record.create.show', 'app.record.edit.show'], async function (event) {
-    clearPluginLayout();
-    initPluginLayout();
-
-    kintone.app.record.setFieldShown(startDateFieldCode, showStartDate);
-    kintone.app.record.setFieldShown(endDateFieldCode, showEndDate);
-    // kintone.app.record.setFieldShown(timesheetFieldCode, false);
-
     let record = event.record;
     console.log(record);
     // record['text'].value = '123';
@@ -190,7 +140,6 @@ jQuery.noConflict();
         }).finally(() => {
           $loading.hide();
         })
-
       });
     }
     kintone.events.on('app.record.create.change.startDate', function (event) {
@@ -230,35 +179,50 @@ jQuery.noConflict();
       else {
         let response = convertCsvToArray(result.body);
         console.log('convertCsvToArray', response);
-        
-
-        // timesheetData = response;
-        // if (Object.keys(response).length === 0) {
-        //   $timeSheetStatus.text(getPluginText('No data', lang));
-        //   $timeSheetStatus.show();
-        // }
-        // else {
-        //   $projectCostTable.html(convertJsonToHtmlTable(response));
-        //   $projectCostTable.show();
-        // }
-        $submitButton.show();
+        let body = {
+          "app": appId,
+          "id": record.$id.value,
+          "record": {}
+        }
+        let newSubtableData = [];
+        for (let item of response) {
+          newSubtableData.push({
+            value: {
+              [`${config?.timesheetProject}`]: {
+                value: item?.projectName
+              },
+              [`${config?.timesheetIssueType}`]: {
+                value: item?.issueType
+              },
+              [`${config?.timesheetKey}`]: {
+                value: item?.key
+              },
+              [`${config?.timesheetSummary}`]: {
+                value: item?.summary
+              },
+              [`${config?.timesheetPriority}`]: {
+                value: item?.priority
+              },
+              [`${config?.timesheetDateTime}`]: {
+                value: new Date(`${item?.dateStarted}`).toISOString()
+              },
+              [`${config?.timesheetDisplayname}`]: {
+                value: item?.displayName
+              },
+              [`${config?.timesheetTimespent}`]: {
+                value: +item?.timeSpent
+              },
+              [`${config?.timesheetWorkDescription}`]: {
+                value: item?.workDescription
+              }
+            }
+          })
+        }
+        body['record'][`${config.timesheetFieldCode}`] = {
+          "value": newSubtableData
+        };
+        await updateRecord(body);
       }
-      $loading.hide();
-      // let fileData = timesheetData ? JSON.stringify(timesheetData) : '';
-      // let blob = new Blob([fileData], { type: 'text/plain' });
-      // let formData = new FormData();
-      // formData.append('__REQUEST_TOKEN__', kintone.getRequestToken());
-      // formData.append('file', blob, 'mf-jira-timesheet.txt');
-      // let fileKey = (await uploadFile(formData)).fileKey;
-      let body = {
-        "app": appId,
-        "id": record.$id.value,
-        "record": {}
-      }
-      // body['record'][`${config.timesheetFieldCode}`] = {
-      //   "value": [{ "fileKey": fileKey }]
-      // };
-      await updateRecord(body);
     }
     catch (e) {
       console.error(e);
