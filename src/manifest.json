@@ -13,7 +13,8 @@
     "css": [
       "css/51-modern-default.css",
       "css/desktop.css",
-      "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+      "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css",
+      "css/common.css"
     ]
   },
   "icon": "image/icon.ico",
@@ -28,7 +29,8 @@
     ],
     "css": [
       "css/51-modern-default.css",
-      "css/config.css"
+      "css/config.css",
+      "css/common.css"
     ],
     "required_params": [
     ]

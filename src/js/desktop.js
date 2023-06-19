@@ -7,47 +7,10 @@ jQuery.noConflict();
   const appId = kintone.app.getId();
   const lang = config?.language ? config?.language : 'en';
   const apiKey = config.token;
-  const showStartDate = config?.showStartDate === 'true' ? true : false;
-  const showEndDate = config?.showEndDate === 'true' ? true : false;
-  const showSubmitButton = config?.showSubmitButton === 'true' ? true : false;
   const startDateFieldCode = config?.startDateFieldCode;
   const endDateFieldCode = config?.endDateFieldCode;
   const timesheetFieldCode = config?.timesheetFieldCode;
   const timeSheetUrl = 'https://timesheet-plugin.herokuapp.com/api/1';
-  let timesheetData;
-  function initPluginLayout() {
-    let pluginSpace = $('#plugin-space');
-    if (!pluginSpace.length) {
-      $('#record-gaia').parent().append(`<div id="plugin-space"><h3>MF kintone-plugin-Timesheeet</h3></div>`);
-      pluginSpace = $('#plugin-space');
-    }
-    let timeSheetStatus = $('<div>').attr('id', 'timeSheetStatus');
-    let costTable = $('<div>').attr('id', 'projectCostTable');
-    let btnSubmit = $('<button>').attr('id', 'btnSubmit').text(getPluginText('Submit', lang));
-    let loading = $('<div>').attr('id', 'loading').html(`<i class="fa fa-spinner fa-spin"></i>&nbsp;${getPluginText('Loading', lang)}`);
-    btnSubmit.addClass('buttonload');
-    timeSheetStatus.addClass('timesheet-status');
-    timeSheetStatus.hide();
-    costTable.hide();
-    btnSubmit.hide();
-    loading.hide();
-    pluginSpace.append(btnSubmit);
-    pluginSpace.append(loading);
-    pluginSpace.append(timeSheetStatus);
-    pluginSpace.append(costTable);
-  }
-  function clearPluginLayout() {
-    let timeSheetStatus = $('#timesheetStatus');
-    if (timeSheetStatus) timeSheetStatus.remove();
-    let costTable = $('#projectCostTable');
-    if (costTable) costTable.remove();
-    let btnSubmit = $('#btnSubmit');
-    if (btnSubmit) btnSubmit.remove();
-    let loading = $('#loading');
-    if (loading) loading.remove();
-    let pluginSpace = $('#plugin-space');
-    if (pluginSpace) pluginSpace.remove();
-  }
   if (!startDateFieldCode || !endDateFieldCode || !timesheetFieldCode) {
     alert(getPluginText('You need to configure the 3 fieldcodes as start date, end date and timesheet data storage file to use MF kintone-plugin-Timesheeet.', lang));
     return;
@@ -96,52 +59,8 @@ jQuery.noConflict();
   kintone.events.on(['app.record.create.show', 'app.record.edit.show'], async function (event) {
     let record = event.record;
     console.log(record);
-    // record['text'].value = '123';
     let startDateValue = record[config?.startDateFieldCode].value;
     let endDateValue = record[config?.endDateFieldCode].value;
-
-    let $submitButton = $('#btnSubmit');
-    let $timeSheetStatus = $('#timeSheetStatus');
-    let $projectCostTable = $('#projectCostTable');
-    let $loading = $('#loading');
-
-    if (showSubmitButton) {
-      $submitButton.show();
-      // handle event click submit button
-      $submitButton.on('click', function () {
-        if (startDateValue > endDateValue) {
-          alert(getPluginText('Start date must be less than or equal to end date.', lang));
-          return;
-        }
-        $submitButton.hide();
-        $timeSheetStatus.hide();
-        $projectCostTable.hide();
-        $loading.show();
-        // call api get project cost data
-        const apiUrl = timeSheetUrl + `/exportData.csv?start=${startDateValue}&end=${endDateValue}&allUsers=true&Apikey=${apiKey}`;
-        proxyRequest(PLUGIN_ID, apiUrl, 'GET', {}, {}).then((result) => {
-          if (result.status.toString() === '401') {
-            alert(getPluginText('Invalid token', lang));
-          }
-          let response = convertCsvToObject(result.body);
-          timesheetData = response;
-          if (Object.keys(response).length === 0) {
-            $timeSheetStatus.text(getPluginText('No data', lang));
-            $timeSheetStatus.show();
-          }
-          else {
-            $projectCostTable.html(convertJsonToHtmlTable(response));
-            $projectCostTable.show();
-          }
-          $submitButton.show();
-
-        }).catch(e => {
-          console.error(e);
-        }).finally(() => {
-          $loading.hide();
-        })
-      });
-    }
     kintone.events.on('app.record.create.change.startDate', function (event) {
       let record = event.record;
       startDateValue = record['startDate'].value;
@@ -165,6 +84,21 @@ jQuery.noConflict();
   });
   kintone.events.on(['app.record.create.submit.success', 'app.record.edit.submit.success'], async function (event) {
     // Lấy dữ liệu của bản ghi mới được tạo
+    const modalDiv = $('<div>', {
+      id: 'modalLoading',
+      class: 'modal',
+      html: `
+        <div class="modal-content">
+          <div class="loader"></div>
+          <p>Loading...</p>
+        </div>
+      `,
+    });
+    
+    // Gắn modalDiv vào vị trí mong muốn trong tài liệu
+    // Ví dụ: Gắn vào thẻ body
+    $('body').append(modalDiv);
+    modalDiv.hide();
     try {
       let record = event.record;
       console.log(record);
@@ -178,14 +112,51 @@ jQuery.noConflict();
       }
       else {
         let response = convertCsvToArray(result.body);
-        console.log('convertCsvToArray', response);
+        // get all records
+        let { records } = await getRecords(appId);
+        let currentData = [];
+        for (let item of records) {
+          if (item.$id.value === record.$id.value) continue;
+          let tableData = item[config?.timesheetFieldCode].value;
+          tableData = tableData.map(o => {
+            return {
+              projectName: o.value[`${config?.timesheetProject}`].value,
+              issueType: o.value[`${config?.timesheetIssueType}`].value,
+              key: o.value[`${config?.timesheetKey}`].value,
+              summary: o.value[`${config?.timesheetSummary}`].value,
+              priority: o.value[`${config?.timesheetPriority}`].value,
+              displayName: o.value[`${config?.timesheetDisplayname}`].value,
+              timeSpent: o.value[`${config?.timesheetTimespent}`].value,
+              dateStarted: o.value[`${config?.timesheetDateTime}`].value,
+              workDescription: o.value[`${config?.timesheetWorkDescription}`].value,
+            }
+
+          });
+          currentData = currentData.concat(tableData);
+        }
+        // filter exist data
+        const expectData = [];
+        for (let a of response) {
+          let check = true;
+          for (let b of currentData) {
+            if (a.projectName === b.projectName && a.issueType === b.issueType && a.key === b.key &&
+              a.summary === b.summary && a.priority === b.priority && a.displayName === b.displayName &&
+              a.timeSpent.toString() === b.timeSpent.toString() && new Date(`${a.dateStarted}`).toISOString() === new Date(`${b.dateStarted}`).toISOString() && a.workDescription === b.workDescription
+            ) {
+              check = false;
+              break;
+            }
+
+          }
+          if (check) expectData.push(a);
+        }
         let body = {
           "app": appId,
           "id": record.$id.value,
           "record": {}
         }
         let newSubtableData = [];
-        for (let item of response) {
+        for (let item of expectData) {
           newSubtableData.push({
             value: {
               [`${config?.timesheetProject}`]: {
@@ -227,5 +198,6 @@ jQuery.noConflict();
     catch (e) {
       console.error(e);
     }
+    modalDiv.remove();
   });
 })(jQuery, kintone.$PLUGIN_ID);

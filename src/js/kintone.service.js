@@ -41,6 +41,15 @@ async function getRecord(appId, recordId) {
         });
     });
 }
+async function getRecords(appId) {
+    return new Promise((resolve, reject) => {
+        kintone.api(kintone.api.url('/k/v1/records', true) + `?app=${appId}`, 'GET', {}, function (resp) {
+            resolve(resp);
+        }, function (error) {
+            reject(error);
+        });
+    });
+}
 async function downloadAndReadKintoneFile(fileKey) {
     return new Promise((resolve, reject) => {
         const domainKintone = window.location.hostname;

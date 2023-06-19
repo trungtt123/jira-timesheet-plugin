@@ -174,6 +174,7 @@ jQuery.noConflict();
       "defaultNowValue": true,
       "required": true
     }
+    $('#modalLoading').show();
     deployApp(appId, body).then(async () => {
       await sleep(10);
       await updateSelectOption(['startDateFieldCode']);
@@ -186,6 +187,8 @@ jQuery.noConflict();
     }).catch((e) => {
       alert(getPluginText('Field codes are duplicated.', lang));
       console.log(e)
+    }).finally(() => {
+      $('#modalLoading').hide();
     });
   })
   $('#btnCreateEndDate').on('click', async function (e) {
@@ -213,6 +216,7 @@ jQuery.noConflict();
       "defaultNowValue": true,
       "required": true
     }
+    $('#modalLoading').show();
     deployApp(appId, body).then(async () => {
       await sleep(10);
       await updateSelectOption(['endDateFieldCode']);
@@ -225,6 +229,8 @@ jQuery.noConflict();
     }).catch((e) => {
       alert(getPluginText('Field codes are duplicated.', lang));
       console.log(e)
+    }).finally(() => {
+      $('#modalLoading').hide();
     });
   })
   $('#btnCreateTimesheet').on('click', function (e) {
@@ -297,7 +303,7 @@ jQuery.noConflict();
       "code": fieldCode,
       "label": displayName
     }
-
+    $('#modalLoading').show();
     deployApp(appId, body).then(async () => {
       await sleep(10);
       await updateSelectOption(['timesheetFieldCode']);
@@ -320,6 +326,8 @@ jQuery.noConflict();
     }).catch((e) => {
       alert(getPluginText('Field codes are duplicated.', lang));
       console.log(e)
+    }).finally(() => {
+      $('#modalLoading').hide();
     });
   })
   $showToken.change(function (e) {

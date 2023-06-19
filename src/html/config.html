@@ -1,4 +1,10 @@
 <section class="settings">
+  <div id="modalLoading" class="modal">
+    <div class="modal-content">
+      <div class="loader"></div>
+      <p>Loading...</p>
+    </div>
+  </div>
   <form class="js-submit-settings">
     <div style="margin-bottom: 10px">
       <span style="width: 100px; display: inline-block;" class="text-bold plugin-text-field">Jira token</span>
@@ -43,8 +49,7 @@
       </div>
     </div>
     <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
-      <span style="width: 100px; display: inline-block;" class="text-bold plugin-text-field">Timesheet data
-        storage</span>
+      <span style="width: 100px; display: inline-block;" class="text-bold plugin-text-field">Timesheet data storage</span>
       <div style="display: flex; flex-direction: column; margin-right: 5px">
         <label for="timesheetDisplayName" class="plugin-text-field">Display name</label>
         <input type="text" name="timesheetDisplayName" id="timesheetDisplayName" class="kintoneplugin-input-text">
@@ -84,7 +89,7 @@
       </div>
     </div>
     <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
-      <span style="width: 100px; display: inline-block;" class="text-bold">Timesheet data storage</span>
+      <span style="width: 100px; display: inline-block;" class="text-bold plugin-text-field">Timesheet data storage</span>
       <div style="display: flex; flex-direction: column; margin-right: 5px">
         <label for="timesheetFieldCode" class="plugin-text-field">Field code</label>
         <!-- <input type="text" name="timesheetFieldCode" id="timesheetFieldCode" class="kintoneplugin-input-text"> -->
@@ -161,23 +166,6 @@
         </div>
       </div>
     </div>
-
-    <!-- <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
-      <span style="width: 100px; display: inline-block;" class="text-bold plugin-text-field">Configure plugin
-        display</span>
-      <div style="margin-right: 10px;">
-        <input type="checkbox" name="showStartDate" id="showStartDate">
-        <label for="showStartDate" class="plugin-text-field">Start date</label>
-      </div>
-      <div style="margin-right: 10px;">
-        <input type="checkbox" name="showEndDate" id="showEndDate">
-        <label for="showEndDate" class="plugin-text-field">End date</label>
-      </div>
-      <div style="margin-right: 10px">
-        <input type="checkbox" name="showSubmitButton" value="showSubmitButton" id="showSubmitButton">
-        <label for="showSubmitButton" class="plugin-text-field">Submit button</label>
-      </div>
-    </div> -->
     <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
       <span style="width: 100px; display: inline-block;" class="text-bold plugin-text-field">Language</span>
       <select class="plugin-select" id="plugin-language">
