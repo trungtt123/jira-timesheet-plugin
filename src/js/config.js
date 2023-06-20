@@ -49,20 +49,21 @@ jQuery.noConflict();
   }
   await updateSelectOption(['startDateFieldCode', 'endDateFieldCode', 'timesheetFieldCode']);
   $('#timesheetFieldCode').change(function () {
-    $('#timesheetProject, #timesheetIssueType, #timesheetKey, #timesheetSummary, #timesheetPriority, #timesheetDisplayName, #timesheetWorkDescription,#timesheetDateStarted,#timesheetTimespent').empty();
-    let timesheetFieldCode = $('#timesheetFieldCode').val();
-    if (!timesheetFieldCode) return;
-
-    let listFieldsOfTimesheet = appData.properties[timesheetFieldCode]?.fields;
-    let listFieldName = Object.keys(listFieldsOfTimesheet);
-
-    let textField = [''].concat(listFieldName?.filter(o => listFieldsOfTimesheet[o]?.type === 'SINGLE_LINE_TEXT'));
-
-    let dateTimeField = [''].concat(listFieldName?.filter(o => listFieldsOfTimesheet[o]?.type === 'DATETIME'));
-
-    let numberField = [''].concat(listFieldName?.filter(o => listFieldsOfTimesheet[o]?.type === 'NUMBER'));
-
-
+    let textField = [''];
+    let dateTimeField = [''];
+    let numberField = [''];
+    try {
+      $('#timesheetProject, #timesheetIssueType, #timesheetKey, #timesheetSummary, #timesheetPriority, #timesheetDisplayName, #timesheetWorkDescription,#timesheetDateStarted,#timesheetTimespent').empty();
+      let timesheetFieldCode = $('#timesheetFieldCode').val();
+      let listFieldsOfTimesheet = appData.properties[timesheetFieldCode]?.fields;
+      let listFieldName = Object.keys(listFieldsOfTimesheet);
+      textField = textField.concat(listFieldName?.filter(o => listFieldsOfTimesheet[o]?.type === 'SINGLE_LINE_TEXT'));
+      dateTimeField = dateTimeField.concat(listFieldName?.filter(o => listFieldsOfTimesheet[o]?.type === 'DATETIME'));
+      numberField = numberField.concat(listFieldName?.filter(o => listFieldsOfTimesheet[o]?.type === 'NUMBER'));
+    }
+    catch (e) {
+      console.log(e);
+    }
     for (let text of textField) {
       $('#timesheetProject, #timesheetIssueType, #timesheetKey, #timesheetSummary, #timesheetPriority, #timesheetDisplayName, #timesheetWorkDescription').append($('<option>', {
         value: text,
@@ -81,6 +82,7 @@ jQuery.noConflict();
         text: number
       }));
     }
+    $('#timesheetProject, #timesheetIssueType, #timesheetKey, #timesheetSummary, #timesheetPriority, #timesheetDisplayName, #timesheetWorkDescription, #timesheetDateStarted, #timesheetTimespent').val('');
   });
   $('#token').val(config?.token);
   $('#startDateFieldCode').val(config?.startDateFieldCode);
