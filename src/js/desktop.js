@@ -12,7 +12,7 @@ jQuery.noConflict();
   const timesheetFieldCode = config?.timesheetFieldCode;
   const timeSheetUrl = 'https://timesheet-plugin.herokuapp.com/api/1';
   if (!startDateFieldCode || !endDateFieldCode || !timesheetFieldCode) {
-    alert(getPluginText('You need to configure the 3 fieldcodes as start date, end date and timesheet data storage file to use MF kintone-plugin-Timesheeet.', lang));
+    alert(getPluginText('You need to configure the 3 fieldcodes as start date, end date and timesheet data storage to use MF kintone-plugin-Timesheeet.', lang));
     return;
   }
   else {
@@ -84,13 +84,13 @@ jQuery.noConflict();
   });
   kintone.events.on(['app.record.create.submit.success', 'app.record.edit.submit.success'], async function (event) {
     // Lấy dữ liệu của bản ghi mới được tạo
-    const modalDiv = $('<div>', {
+    let modalDiv = $('<div>', {
       id: 'modalLoading',
       class: 'modal',
       html: `
         <div class="modal-content">
           <div class="loader"></div>
-          <p>Loading...</p>
+          <p>${getPluginText('Get timesheet data', lang)}...</p>
         </div>
       `,
     });
@@ -98,7 +98,7 @@ jQuery.noConflict();
     // Gắn modalDiv vào vị trí mong muốn trong tài liệu
     // Ví dụ: Gắn vào thẻ body
     $('body').append(modalDiv);
-    modalDiv.hide();
+    modalDiv.show();
     try {
       let record = event.record;
       console.log(record);
@@ -125,9 +125,9 @@ jQuery.noConflict();
               key: o.value[`${config?.timesheetKey}`].value,
               summary: o.value[`${config?.timesheetSummary}`].value,
               priority: o.value[`${config?.timesheetPriority}`].value,
-              displayName: o.value[`${config?.timesheetDisplayname}`].value,
+              displayName: o.value[`${config?.timesheetDisplayName}`].value,
               timeSpent: o.value[`${config?.timesheetTimespent}`].value,
-              dateStarted: o.value[`${config?.timesheetDateTime}`].value,
+              dateStarted: o.value[`${config?.timesheetDateStarted}`].value,
               workDescription: o.value[`${config?.timesheetWorkDescription}`].value,
             }
 
@@ -174,10 +174,10 @@ jQuery.noConflict();
               [`${config?.timesheetPriority}`]: {
                 value: item?.priority
               },
-              [`${config?.timesheetDateTime}`]: {
+              [`${config?.timesheetDateStarted}`]: {
                 value: new Date(`${item?.dateStarted}`).toISOString()
               },
-              [`${config?.timesheetDisplayname}`]: {
+              [`${config?.timesheetDisplayName}`]: {
                 value: item?.displayName
               },
               [`${config?.timesheetTimespent}`]: {

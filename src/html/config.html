@@ -6,24 +6,25 @@
     </div>
   </div>
   <form class="js-submit-settings">
-    <div style="margin-bottom: 10px">
-      <span style="width: 100px; display: inline-block;" class="text-bold plugin-text-field">Jira token</span>
-      <input type="password" id="token" class="js-text-message kintoneplugin-input-text">
-      <div style="margin-left: 105px; margin-top: 5px;">
-        <input type="checkbox" name="showToken" value="showToken" id="showToken">
-        <label for="showToken" class="plugin-text-field">Show token</label>
+    <div class="flex-row plugin-mb-1">
+      <span class="input-label text-bold plugin-text-field">Jira token</span>
+      <div class="flex-column">
+        <input type="password" id="token" class="js-text-message kintoneplugin-input-text plugin-mb-1">
+        <div>
+          <input type="checkbox" name="showToken" value="showToken" id="showToken">
+          <label for="showToken" class="plugin-text-field">Show token</label>
+        </div>
       </div>
     </div>
-    <p class="plugin-text-field">If you haven't installed the start date, end date and timesheet data storage fields on
-      the form, please set them up here.</p>
-    <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
-      <span style="width: 100px; display: inline-block;" class="text-bold plugin-text-field">Start date</span>
-      <div style="display: flex; flex-direction: column; margin-right: 5px">
+    <p class="plugin-text-field">If you haven't installed the start date, end date and timesheet data storage fields on the form, please set them up here.</p>
+    <div class="flex-row plugin-mb-1">
+      <span class="input-label text-bold plugin-text-field">Start date</span>
+      <div class="flex-column plugin-mr-small">
         <label for="startDateDisplayName" class="plugin-text-field">Display name</label>
         <input type="text" name="startDateDisplayName" id="startDateDisplayName" class="kintoneplugin-input-text">
         <div id="error-displayNameStartDate" class="text-error"></div>
       </div>
-      <div style="display: flex; flex-direction: column; margin-right: 5px">
+      <div class="flex-column plugin-mr-small">
         <label for="startDateFC" class="plugin-text-field">Field code</label>
         <input type="text" name="startDateFC" id="startDateFC" class="kintoneplugin-input-text">
         <div id="error-startDateFC" class="text-error"></div>
@@ -32,14 +33,14 @@
         <button id="btnCreateStartDate" class="plugin-text-field btn-create-field">Create</button>
       </div>
     </div>
-    <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
-      <span style="width: 100px; display: inline-block;" class="text-bold plugin-text-field">End date</span>
-      <div style="display: flex; flex-direction: column; margin-right: 5px">
+    <div class="flex-row plugin-mb-1">
+      <span class="input-label text-bold plugin-text-field">End date</span>
+      <div class="flex-column plugin-mr-small">
         <label for="endDateDisplayName" class="plugin-text-field">Display name</label>
         <input type="text" name="endDateDisplayName" id="endDateDisplayName" class="kintoneplugin-input-text">
         <div id="error-displayNameEndDate" class="text-error"></div>
       </div>
-      <div style="display: flex; flex-direction: column; margin-right: 5px">
+      <div class="flex-column plugin-mr-small">
         <label for="endDateFC" class="plugin-text-field">Field code</label>
         <input type="text" name="endDateFC" id="endDateFC" class="kintoneplugin-input-text">
         <div id="error-endDateFC" class="text-error"></div>
@@ -48,14 +49,15 @@
         <button id="btnCreateEndDate" class="plugin-text-field btn-create-field">Create</button>
       </div>
     </div>
-    <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
-      <span style="width: 100px; display: inline-block;" class="text-bold plugin-text-field">Timesheet data storage</span>
-      <div style="display: flex; flex-direction: column; margin-right: 5px">
-        <label for="timesheetDisplayName" class="plugin-text-field">Display name</label>
-        <input type="text" name="timesheetDisplayName" id="timesheetDisplayName" class="kintoneplugin-input-text">
-        <div id="error-displayNameTimesheet" class="text-error"></div>
+    <div class="flex-row plugin-mb-1">
+      <span class="input-label text-bold plugin-text-field">Timesheet data storage</span>
+      <div class="flex-column plugin-mr-small">
+        <label for="timesheetDataDisplayName" class="plugin-text-field">Display name</label>
+        <input type="text" name="timesheetDataDisplayName" id="timesheetDataDisplayName"
+          class="kintoneplugin-input-text">
+        <div id="error-displayNameTimesheetData" class="text-error"></div>
       </div>
-      <div style="display: flex; flex-direction: column; margin-right: 5px">
+      <div class="flex-column plugin-mr-small">
         <label for="timesheetFC" class="plugin-text-field">Field code</label>
         <input type="text" name="timesheetFC" id="timesheetFC" class="kintoneplugin-input-text">
         <div id="error-timesheetFC" class="text-error"></div>
@@ -64,11 +66,10 @@
         <button id="btnCreateTimesheet" class="plugin-text-field btn-create-field">Create</button>
       </div>
     </div>
-    <p class="plugin-text-field">If you have installed these 3 fields, start date, end date and timesheet data storage
-      in the form, please enter their field codes below.</p>
-    <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
-      <span style="width: 100px; display: inline-block;" class="text-bold plugin-text-field">Start date</span>
-      <div style="display: flex; flex-direction: column; margin-right: 5px">
+    <p class="plugin-text-field">If you have installed these 3 fields, start date, end date and timesheet data storage in the form, please enter their field codes below.</p>
+    <div class="flex-row plugin-mb-1">
+      <span class="input-label text-bold plugin-text-field">Start date</span>
+      <div class="flex-column plugin-mr-small">
         <label for="startDateFieldCode" class="plugin-text-field">Field code</label>
         <!-- <input type="text" name="startDateFieldCode" id="startDateFieldCode" class="kintoneplugin-input-text"> -->
         <select class="plugin-select" id="startDateFieldCode" name="startDateFieldCode">
@@ -77,9 +78,9 @@
         <div id="error-startDateFieldCode" class="text-error"></div>
       </div>
     </div>
-    <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
-      <span style="width: 100px; display: inline-block;" class="text-bold plugin-text-field">End date</span>
-      <div style="display: flex; flex-direction: column; margin-right: 5px">
+    <div class="flex-row plugin-mb-1">
+      <span class="input-label text-bold plugin-text-field">End date</span>
+      <div class="flex-column plugin-mr-small">
         <label for="endDateFieldCode" class="plugin-text-field">Field code</label>
         <!-- <input type="text" name="endDateFieldCode" id="endDateFieldCode" class="kintoneplugin-input-text"> -->
         <select class="plugin-select" id="endDateFieldCode" name="endDateFieldCode">
@@ -88,77 +89,78 @@
         <div id="error-endDateFieldCode" class="text-error"></div>
       </div>
     </div>
-    <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
-      <span style="width: 100px; display: inline-block;" class="text-bold plugin-text-field">Timesheet data storage</span>
-      <div style="display: flex; flex-direction: column; margin-right: 5px">
+    <div class="flex-row  plugin-mb-1">
+      <span class="input-label text-bold plugin-text-field">Timesheet data storage</span>
+      <div class="flex-column plugin-mr-small">
         <label for="timesheetFieldCode" class="plugin-text-field">Field code</label>
         <!-- <input type="text" name="timesheetFieldCode" id="timesheetFieldCode" class="kintoneplugin-input-text"> -->
-        <select class="plugin-select" id="timesheetFieldCode" name="timesheetFieldCode">
+        <select class="plugin-select plugin-mb-1" id="timesheetFieldCode" name="timesheetFieldCode">
           <!-- <option value=""></option> -->
         </select>
         <div id="error-timesheetFieldCode" class="text-error"></div>
-        <div style="display: flex; flex-direction: row;">
-          <div style="display: flex; flex-direction: column; margin-right: 5px">
-            <label for="timesheetProject" class="">Project</label>
+        <div class="flex-row plugin-mb-1">
+          <div class="flex-column plugin-mr-small">
+            <label for="timesheetProject" class="plugin-text-field">Project</label>
             <select class="plugin-select plugin-sub-select" id="timesheetProject" name="timesheetProject">
               <!-- <option value="">None</option> -->
             </select>
             <div id="error-timesheetProject" class="text-error"></div>
           </div>
-          <div style="display: flex; flex-direction: column; margin-right: 5px">
-            <label for="timesheetIssueType" class="">Issue type</label>
+          <div class="flex-column plugin-mr-small">
+            <label for="timesheetIssueType" class="plugin-text-field">Issue type</label>
             <select class="plugin-select plugin-sub-select" id="timesheetIssueType" name="timesheetIssueType">
               <!-- <option value="">None</option> -->
             </select>
             <div id="error-timesheetIssueType" class="text-error"></div>
           </div>
-          <div style="display: flex; flex-direction: column; margin-right: 5px">
-            <label for="timesheetKey" class="">Key</label>
+          <div class="flex-column plugin-mr-small">
+            <label for="timesheetKey" class="plugin-text-field">Key</label>
             <select class="plugin-select plugin-sub-select" id="timesheetKey" name="timesheetKey">
               <!-- <option value="">None</option> -->
             </select>
             <div id="error-timesheetKey" class="text-error"></div>
           </div>
-          <div style="display: flex; flex-direction: column; margin-right: 5px">
-            <label for="timesheetSummary" class="">Summary</label>
+          <div class="flex-column plugin-mr-small">
+            <label for="timesheetSummary" class="plugin-text-field">Summary</label>
             <select class="plugin-select plugin-sub-select" id="timesheetSummary" name="timesheetSummary">
               <!-- <option value="">None</option> -->
             </select>
             <div id="error-timesheetSummary" class="text-error"></div>
           </div>
-          <div style="display: flex; flex-direction: column; margin-right: 5px">
-            <label for="timesheetPriority" class="">Priority</label>
+          <div class="flex-column plugin-mr-small">
+            <label for="timesheetPriority" class="plugin-text-field">Priority</label>
             <select class="plugin-select plugin-sub-select" id="timesheetPriority" name="timesheetPriority">
               <!-- <option value="">None</option> -->
             </select>
             <div id="error-timesheetPriority" class="text-error"></div>
           </div>
         </div>
-        <div style="display: flex; flex-direction: row;">
-          <div style="display: flex; flex-direction: column; margin-right: 5px">
-            <label for="timesheetDateTime" class="">Date and time</label>
-            <select class="plugin-select plugin-sub-select" id="timesheetDateTime" name="timesheetDateTime">
+        <div class="flex-row">
+          <div class="flex-column plugin-mr-small">
+            <label for="timesheetDateStarted" class="plugin-text-field">Date started</label>
+            <select class="plugin-select plugin-sub-select" id="timesheetDateStarted" name="timesheetDateStarted">
               <!-- <option value="">None</option> -->
             </select>
-            <div id="error-timesheetDateTime" class="text-error"></div>
+            <div id="error-timesheetDateStarted" class="text-error"></div>
           </div>
-          <div style="display: flex; flex-direction: column; margin-right: 5px">
-            <label for="timesheetDisplayname" class="">Display name</label>
-            <select class="plugin-select plugin-sub-select" id="timesheetDisplayname" name="timesheetDisplayname">
+          <div class="flex-column plugin-mr-small">
+            <label for="timesheetDisplayName" class="plugin-text-field">Display name</label>
+            <select class="plugin-select plugin-sub-select" id="timesheetDisplayName" name="timesheetDisplayName">
               <!-- <option value="">None</option> -->
             </select>
-            <div id="error-timesheetDisplayname" class="text-error"></div>
+            <div id="error-timesheetDisplayName" class="text-error"></div>
           </div>
-          <div style="display: flex; flex-direction: column; margin-right: 5px">
-            <label for="timesheetTimespent" class="">Time spent</label>
+          <div class="flex-column plugin-mr-small">
+            <label for="timesheetTimespent" class="plugin-text-field">Time spent</label>
             <select class="plugin-select plugin-sub-select" id="timesheetTimespent" name="timesheetTimespent">
               <!-- <option value="">None</option> -->
             </select>
             <div id="error-timesheetTimespent" class="text-error"></div>
           </div>
-          <div style="display: flex; flex-direction: column; margin-right: 5px">
-            <label for="timesheetWorkDescription" class="">Work description</label>
-            <select class="plugin-select plugin-sub-select" id="timesheetWorkDescription" name="timesheetWorkDescription">
+          <div class="flex-column plugin-mr-small">
+            <label for="timesheetWorkDescription" class="plugin-text-field">Work description</label>
+            <select class="plugin-select plugin-sub-select" id="timesheetWorkDescription"
+              name="timesheetWorkDescription">
               <!-- <option value="">None</option> -->
             </select>
             <div id="error-timesheetWorkDescription" class="text-error"></div>
@@ -166,8 +168,8 @@
         </div>
       </div>
     </div>
-    <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
-      <span style="width: 100px; display: inline-block;" class="text-bold plugin-text-field">Language</span>
+    <div class="flex-row plugin-mb-1">
+      <span class="input-label text-bold plugin-text-field">Language</span>
       <select class="plugin-select" id="plugin-language">
         <option value="en">English</option>
         <option value="ja">Japanese</option>

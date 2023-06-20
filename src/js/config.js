@@ -49,7 +49,7 @@ jQuery.noConflict();
   }
   await updateSelectOption(['startDateFieldCode', 'endDateFieldCode', 'timesheetFieldCode']);
   $('#timesheetFieldCode').change(function () {
-    $('#timesheetProject, #timesheetIssueType, #timesheetKey, #timesheetSummary, #timesheetPriority, #timesheetDisplayname, #timesheetWorkDescription,#timesheetDateTime,#timesheetTimespent').empty();
+    $('#timesheetProject, #timesheetIssueType, #timesheetKey, #timesheetSummary, #timesheetPriority, #timesheetDisplayName, #timesheetWorkDescription,#timesheetDateStarted,#timesheetTimespent').empty();
     let timesheetFieldCode = $('#timesheetFieldCode').val();
     if (!timesheetFieldCode) return;
 
@@ -64,13 +64,13 @@ jQuery.noConflict();
 
 
     for (let text of textField) {
-      $('#timesheetProject, #timesheetIssueType, #timesheetKey, #timesheetSummary, #timesheetPriority, #timesheetDisplayname, #timesheetWorkDescription').append($('<option>', {
+      $('#timesheetProject, #timesheetIssueType, #timesheetKey, #timesheetSummary, #timesheetPriority, #timesheetDisplayName, #timesheetWorkDescription').append($('<option>', {
         value: text,
         text: text
       }));
     }
     for (let dateTime of dateTimeField) {
-      $('#timesheetDateTime').append($('<option>', {
+      $('#timesheetDateStarted').append($('<option>', {
         value: dateTime,
         text: dateTime
       }));
@@ -93,8 +93,8 @@ jQuery.noConflict();
   $('#timesheetKey').val(config?.timesheetKey);
   $('#timesheetSummary').val(config?.timesheetSummary);
   $('#timesheetPriority').val(config?.timesheetPriority);
-  $('#timesheetDateTime').val(config?.timesheetDateTime);
-  $('#timesheetDisplayname').val(config?.timesheetDisplayname);
+  $('#timesheetDateStarted').val(config?.timesheetDateStarted);
+  $('#timesheetDisplayName').val(config?.timesheetDisplayName);
   $('#timesheetTimespent').val(config?.timesheetTimespent);
   $('#timesheetWorkDescription').val(config?.timesheetWorkDescription);
 
@@ -119,8 +119,8 @@ jQuery.noConflict();
     let timesheetKey = $('#timesheetKey').val();
     let timesheetSummary = $('#timesheetSummary').val();
     let timesheetPriority = $('#timesheetPriority').val();
-    let timesheetDateTime = $('#timesheetDateTime').val();
-    let timesheetDisplayname = $('#timesheetDisplayname').val();
+    let timesheetDateStarted = $('#timesheetDateStarted').val();
+    let timesheetDisplayName = $('#timesheetDisplayName').val();
     let timesheetTimespent = $('#timesheetTimespent').val();
     let timesheetWorkDescription = $('#timesheetWorkDescription').val();
     let language = $('#plugin-language').val();
@@ -134,8 +134,8 @@ jQuery.noConflict();
       timesheetKey,
       timesheetSummary,
       timesheetPriority,
-      timesheetDateTime,
-      timesheetDisplayname,
+      timesheetDateStarted,
+      timesheetDisplayName,
       timesheetTimespent,
       timesheetWorkDescription,
       language
@@ -235,12 +235,12 @@ jQuery.noConflict();
   })
   $('#btnCreateTimesheet').on('click', function (e) {
     e.preventDefault();
-    let displayName = $('#timesheetDisplayName').val();
+    let displayName = $('#timesheetDataDisplayName').val();
     let fieldCode = $('#timesheetFC').val();
     let isValidate = true;
     if (!displayName) {
       isValidate = false;
-      $('#error-displayNameTimesheet').text(getPluginText('Display name is required', lang));
+      $('#error-displayNameDataTimesheet').text(getPluginText('Display name is required', lang));
     }
     if (!fieldCode) {
       isValidate = false;
@@ -279,10 +279,10 @@ jQuery.noConflict();
           'code': `${fieldCode}_priority`,
           'label': 'Priority'
         },
-        [`${fieldCode}_dateAndTime`]: {
+        [`${fieldCode}_dateStarted`]: {
           'type': 'DATETIME',
-          'code': `${fieldCode}_dateAndTime`,
-          'label': 'Date and time'
+          'code': `${fieldCode}_dateStarted`,
+          'label': 'Date started'
         },
         [`${fieldCode}_displayName`]: {
           'type': 'SINGLE_LINE_TEXT',
@@ -308,9 +308,9 @@ jQuery.noConflict();
       await sleep(10);
       await updateSelectOption(['timesheetFieldCode']);
       alert(getPluginText('Create success', lang));
-      $('#timesheetDisplayName').val('');
+      $('#timesheetDataDisplayName').val('');
       $('#timesheetFC').val('');
-      $('#error-displayNameTimesheet').text('');
+      $('#error-displayNameDataTimesheet').text('');
       $('#error-timesheetFC').text('');
       $('#timesheetFieldCode').val(fieldCode);
       $('#timesheetFieldCode').trigger('change');
@@ -319,8 +319,8 @@ jQuery.noConflict();
       $('#timesheetKey').val(`${fieldCode}_key`);
       $('#timesheetSummary').val(`${fieldCode}_summary`);
       $('#timesheetPriority').val(`${fieldCode}_priority`);
-      $('#timesheetDateTime').val(`${fieldCode}_dateAndTime`);
-      $('#timesheetDisplayname').val(`${fieldCode}_displayName`);
+      $('#timesheetDateStarted').val(`${fieldCode}_dateStarted`);
+      $('#timesheetDisplayName').val(`${fieldCode}_displayName`);
       $('#timesheetTimespent').val(`${fieldCode}_timeSpent`);
       $('#timesheetWorkDescription').val(`${fieldCode}_workDescription`);
     }).catch((e) => {

@@ -15,8 +15,8 @@ const pluginText = {
         en: 'Start date must be less than or equal to end date.',
         ja: '開始日には終了日より前の日付あるいは同じ日付を指定してください。'
     },
-    'You need to configure the 3 fieldcodes as start date, end date and timesheet data storage file to use MF kintone-plugin-Timesheeet.': {
-        en: 'You need to configure the 3 fieldcodes as start date, end date and timesheet data storage file to use MF kintone-plugin-Timesheeet.',
+    'You need to configure the 3 fieldcodes as start date, end date and timesheet data storage to use MF kintone-plugin-Timesheeet.': {
+        en: 'You need to configure the 3 fieldcodes as start date, end date and timesheet data storage to use MF kintone-plugin-Timesheeet.',
         ja: `「MF kintone-plugin-Timesheet」のプラグインを利用するために、開始日、終了日、タイムシートのデータを保存するファイルの3つのフィールドコードを設定する必要があります。`
     },
     "The start date field must have the type DATE": {
@@ -49,7 +49,7 @@ const pluginText = {
     },
     'Timesheet data storage': {
         en: 'Timesheet data storage',
-        ja: 'Timesheet data storage'
+        ja: 'タイムシートデータを保存'
     },
     'Jira token': {
         en: 'Jira token',
@@ -89,11 +89,11 @@ const pluginText = {
     },
     "If you haven't installed the start date, end date and timesheet data storage fields on the form, please set them up here.": {
         en: "If you haven't installed the start date, end date and timesheet data storage fields on the form, please set them up here.",
-        ja: "If you haven't installed the start date, end date and timesheet data storage fields on the form, please set them up here."
+        ja: "もしフォームに開始日、終了日、タイムシートのデータを保存するフィールドをインストールしていない場合は、こちらでセットアップしてください。"
     },
     "If you have installed these 3 fields, start date, end date and timesheet data storage in the form, please enter their field codes below.": {
         en: "If you have installed these 3 fields, start date, end date and timesheet data storage in the form, please enter their field codes below.",
-        ja: "If you have installed these 3 fields, start date, end date and timesheet data storage in the form, please enter their field codes below."
+        ja: "もしフォームに開始日、終了日、タイムシートのデータを保存するフィールドをインストールしている場合は、以下にフィールドコードを入力してください。"
     },
     "Field codes are duplicated.": {
         en: "Field codes are duplicated.",
@@ -114,6 +114,42 @@ const pluginText = {
     "Invalid token": {
         en: "Invalid token",
         ja: "無効トーケン"
+    },
+    "Project": {
+        en: "Project",
+        ja: "プロジェクト"
+    },
+    "Issue type": {
+        en: "Issue type",
+        ja: "課題種類",
+    },
+    "Key": {
+        en: "Key",
+        ja: "キー"
+    },
+    "Summary": {
+        en: "Summary",
+        ja: "概要"
+    },
+    "Priority": {
+        en: "Priority",
+        ja: "優先"
+    },
+    "Date started": {
+        en: "Date started",
+        ja: "日時"
+    },
+    "Time spent": {
+        en: "Time spent",
+        ja: "使用時間"
+    },
+    "Work description": {
+        en: "Work description",
+        ja: "作業説明"
+    },
+    "Get timesheet data": {
+        en: "Get timesheet data",
+        ja: "タイムシートデータを取得"
     }
 }
 function getPluginText(text, lang) {
