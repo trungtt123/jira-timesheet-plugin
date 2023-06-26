@@ -26,17 +26,17 @@ jQuery.noConflict();
         <div class="mf-jiraTimesheet-controls" id="mf-jiraTimesheet">
           <div class="flex-row">
             <div class="flex-column">
-              <label for="mf-startDate" class="mf-date-label">Ngày bắt đầu</label>
+              <label for="mf-startDate" class="mf-date-label">${getPluginText('Start date', lang)}</label>
               <input type="date" id="mf-startDate" class="mf-date-input plugin-mb-1 plugin-mr-small">
             </div>
             <div class="flex-column">
-              <label for="mf-endDate" class="mf-date-label">Ngày kết thúc</label>
+              <label for="mf-endDate" class="mf-date-label">${getPluginText('End date', lang)}</label>
               <input type="date" id="mf-endDate" class="mf-date-input plugin-mb-1 plugin-mr-small">
             </div>
-            <button id="btnGetTimesheet" class="mf-submit-button plugin-mb-1" style="margin-top: 26px">Get timesheet</button>
+            <button id="btnGetTimesheet" class="mf-submit-button plugin-mb-1" style="margin-top: 26px">${getPluginText('Get timesheet', lang)}</button>
           </div>
           <div>
-          <button id="btnGetAllTimesheet" class="mf-submit-button">Get all timesheet</button>
+          <button id="btnGetAllTimesheet" class="mf-submit-button">${getPluginText('Get all timesheet', lang)}</button>
           </div>
         </div>
         `
@@ -54,7 +54,7 @@ jQuery.noConflict();
           endDateValue = `${year}-${month}-${day}`;
         }
         if (!startDateValue || !endDateValue) {
-          alert('Nhập ngày bắt đầu và ngày kết thúc');
+          alert(getPluginText('Nhập ngày bắt đầu và ngày kết thúc!', lang));
           return;
         }
         const apiUrl = timeSheetUrl + `/exportData.csv?start=${startDateValue}&end=${endDateValue}&allUsers=true&Apikey=${apiKey}`;

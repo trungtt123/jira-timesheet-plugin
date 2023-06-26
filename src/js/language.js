@@ -150,6 +150,18 @@ const pluginText = {
     "Get timesheet data": {
         en: "Get timesheet data",
         ja: "タイムシートデータを取得"
+    },
+    "Get all timesheet": {
+        en: "Get all timesheet",
+        ja: "全てのタイムシートを取得する"
+    },
+    "Get timesheet": {
+        en: "Get timesheet",
+        ja: "タイムシートを取得する"
+    },
+    "Nhập ngày bắt đầu và ngày kết thúc!": {
+        en: "Nhập ngày bắt đầu và ngày kết thúc!",
+        ja: "開始日と終了日を入力してください!"
     }
 }
 function getPluginText(text, lang) {
