@@ -57,24 +57,6 @@
   font-weight: bold;
 }
 
-.input-label {
-  width: 100px;
-  display: inline-block;
-  margin-right: 10px;
-}
-.flex-row {
-  display: flex; 
-  flex-direction: row;
-}
-.flex-column {
-  display: flex; 
-  flex-direction: column;
-}
-.plugin-mb-1 {
-  margin-bottom: 1rem;
-}
-.plugin-mr-small {
-  margin-right: 0.5rem;
-}
+
 
 

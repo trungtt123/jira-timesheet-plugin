@@ -6,7 +6,7 @@
     "develop": "npm run build",
     "build": "kintone-plugin-packer --ppk private.ppk --out \"dist/MF kintone-plugin-Timesheeet.zip\" src",
     "lint": "eslint src",
-    "upload": "kintone-plugin-uploader --base-url https://huongdtt16.kintone.com --username huong.dtt@mediafusion.co.jp --password Huongdtt@2022 \"dist/MF kintone-plugin-Timesheeet.zip\""
+    "upload": "kintone-plugin-uploader --base-url https://mediafusion-mf-trung.kintone.com --username bruceleemax111@gmail.com --password trungtt123 \"dist/MF kintone-plugin-Timesheeet.zip\""
   },
   "devDependencies": {
     "@cybozu/eslint-config": "^18.0.3",

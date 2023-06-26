@@ -32,6 +32,17 @@ async function uploadFile(formData) {
         // Xử lý lỗi
     }
 }
+async function addRecord(body) {
+    return new Promise((resolve, reject) => {
+        kintone.api(kintone.api.url('/k/v1/record', true), 'POST', body, function(resp) {
+            // success
+            resolve(resp);
+          }, function(error) {
+            // error
+            reject(error);
+          });
+    });
+}
 async function getRecord(appId, recordId) {
     return new Promise((resolve, reject) => {
         kintone.api(kintone.api.url('/k/v1/record', true) + `?app=${appId}&id=${recordId}`, 'GET', {}, function (resp) {

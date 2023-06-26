@@ -133,14 +133,15 @@
   max-width: 98%;
 }
 
-.kintoneplugin-input-checkbox-item-block  {
+.kintoneplugin-input-checkbox-item-block {
   display: block;
 }
+
 .kintoneplugin-input-checkbox-item-inline {
   display: inline-block;
 }
 
-.kintoneplugin-input-checkbox-item:hover + label {
+.kintoneplugin-input-checkbox-item:hover+label {
   color: #666;
 }
 
@@ -149,7 +150,7 @@
   cursor: pointer;
 }
 
-.kintoneplugin-input-checkbox-item input[type="checkbox"] + label {
+.kintoneplugin-input-checkbox-item input[type="checkbox"]+label {
   position: relative;
   display: inline-block;
   margin-left: 32px;
@@ -158,12 +159,12 @@
   cursor: pointer;
 }
 
-.kintoneplugin-input-checkbox-item input[type="checkbox"][disabled] + label {
+.kintoneplugin-input-checkbox-item input[type="checkbox"][disabled]+label {
   color: #bababa;
   cursor: not-allowed;
 }
 
-.kintoneplugin-input-checkbox-item input[type="checkbox"] + label:before {
+.kintoneplugin-input-checkbox-item input[type="checkbox"]+label:before {
   position: absolute;
   top: 50%;
   left: -30px;
@@ -177,7 +178,7 @@
   content: "";
 }
 
-.kintoneplugin-input-checkbox-item input[type="checkbox"]:checked + label:after {
+.kintoneplugin-input-checkbox-item input[type="checkbox"]:checked+label:after {
   position: absolute;
   top: 50%;
   left: -30px;
@@ -189,7 +190,7 @@
   content: "";
 }
 
-.kintoneplugin-input-checkbox-item input[type="checkbox"][disabled]:checked + label:after {
+.kintoneplugin-input-checkbox-item input[type="checkbox"][disabled]:checked+label:after {
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACpF6WWAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NDkxMSwgMjAxMy8xMC8yOS0xMTo0NzoxNiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChNYWNpbnRvc2gpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkQ5N0VENzg3MEJBQzExRTQ5MUVFOTIwNzZCRTVEQkEwIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkQ5N0VENzg4MEJBQzExRTQ5MUVFOTIwNzZCRTVEQkEwIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6RDk3RUQ3ODUwQkFDMTFFNDkxRUU5MjA3NkJFNURCQTAiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6RDk3RUQ3ODYwQkFDMTFFNDkxRUU5MjA3NkJFNURCQTAiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4bu7OxAAABBUlEQVR42mK8fPXacwYGBh4G6oEvLECCH4gvAvEbKhgoAsT6IEP/Qg30pYKhm0HmMTHQAAw6Q+WAmI2ahmoB8XQgzsOWcsgxVAWIe4HYC4i7gdiOWEO5gFgHi7gaEE8FYg8ofw0QPyHGUCEgrgbimUBshSSuATXQDcnAfCC+hG4ACxZDQd6pgrI7oRq/AXE/ELsgGVgIxM+weROboVeAeA4QpwCxDRCfRZOHGfgEV6BjM/QOEJdC2SlocuugLn9GTjr9AMTlUBcjG5hLyEBcLoWBd1CDQSlBgFgDCRkKMxgUfhzEGkiMoSDwasgXKHi9zwwtsTdTqeRnBhn6EUc+Jxd8BAgwAIGUL+JG+jF3AAAAAElFTkSuQmCC);
 }
 
@@ -198,15 +199,15 @@
   vertical-align: middle;
 }
 
-.lt-ie9 .kintoneplugin-input-checkbox-item input[type="checkbox"] + label {
+.lt-ie9 .kintoneplugin-input-checkbox-item input[type="checkbox"]+label {
   margin-left: 4px;
 }
 
-.lt-ie9 .kintoneplugin-input-checkbox-item input[type="checkbox"] + label:before {
+.lt-ie9 .kintoneplugin-input-checkbox-item input[type="checkbox"]+label:before {
   display: none;
 }
 
-.lt-ie9 .kintoneplugin-input-checkbox-item input[type="checkbox"]:checked + label:after {
+.lt-ie9 .kintoneplugin-input-checkbox-item input[type="checkbox"]:checked+label:after {
   display: none;
 }
 
@@ -348,7 +349,7 @@
   font-size: 14px;
 }
 
-.kintoneplugin-input-radio-item:hover + label {
+.kintoneplugin-input-radio-item:hover+label {
   color: #666;
 }
 
@@ -357,7 +358,7 @@
   cursor: pointer;
 }
 
-.kintoneplugin-input-radio-item input[type="radio"] + label {
+.kintoneplugin-input-radio-item input[type="radio"]+label {
   position: relative;
   display: inline-block;
   margin-left: 32px;
@@ -365,12 +366,12 @@
   cursor: pointer;
 }
 
-.kintoneplugin-input-radio-item input[type="checkbox"][disabled] + label {
+.kintoneplugin-input-radio-item input[type="checkbox"][disabled]+label {
   color: #bababa;
   cursor: not-allowed;
 }
 
-.kintoneplugin-input-radio-item input[type="radio"] + label:before {
+.kintoneplugin-input-radio-item input[type="radio"]+label:before {
   position: absolute;
   top: 50%;
   left: -30px;
@@ -386,7 +387,7 @@
   font-size: 14px;
 }
 
-.kintoneplugin-input-radio-item input[type="radio"]:checked + label:after {
+.kintoneplugin-input-radio-item input[type="radio"]:checked+label:after {
   position: absolute;
   top: 50%;
   left: -26px;
@@ -403,15 +404,15 @@
   vertical-align: middle;
 }
 
-.lt-ie9 .kintoneplugin-input-radio-item input[type="radio"] + label {
+.lt-ie9 .kintoneplugin-input-radio-item input[type="radio"]+label {
   margin-left: 4px;
 }
 
-.lt-ie9 .kintoneplugin-input-radio-item input[type="radio"] + label:before {
+.lt-ie9 .kintoneplugin-input-radio-item input[type="radio"]+label:before {
   display: none;
 }
 
-.lt-ie9 .kintoneplugin-input-radio-item input[type="radio"]:checked + label:after {
+.lt-ie9 .kintoneplugin-input-radio-item input[type="radio"]:checked+label:after {
   display: none;
 }
 
@@ -548,7 +549,7 @@
 }
 
 .kintoneplugin-table td:first-child {
-    border-left-width: 1px;
+  border-left-width: 1px;
 }
 
 .kintoneplugin-table td.kintoneplugin-table-td-operation {
@@ -568,7 +569,8 @@
   background-color: transparent;
 }
 
-.kintoneplugin-table-td-operation .kintoneplugin-button-add-row-image, .kintoneplugin-table-td-operation .kintoneplugin-button-remove-row-image {
+.kintoneplugin-table-td-operation .kintoneplugin-button-add-row-image,
+.kintoneplugin-table-td-operation .kintoneplugin-button-remove-row-image {
   display: inline-block;
   width: 24px;
   height: 24px;
@@ -579,9 +581,11 @@
   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAByUDbMAAABG0lEQVQ4ja2UMWrDUAyG31TIAUIO0cVbCMToHa0nyF4HqbtPkBPkAqEe/KQ4bclkCB06FDqoQ7Cb5j2/l1L/oMFY/pB+SzImoZzc1BZ1lpObpnKDsihLICkBubIohy4AuQKS0qIsk5DFajsBdAQo+0vIdQBJA+hosdpOgqD7h+c7S7yJQbwg3gSBgPz4J1DfuqNrkyHR2vswTPY5Ofip6mzqQDIfVVUTHpaXLVb/giFXxhhj5uvdLJGYhFmUw3y9mxlb1Jn/kj81Ikvy4X1T1FmwMkB+A+QWkFsgOamq9s/ILRC/Bisb1bPR/2ZszoDkBZC/bp6zc6uORtmAbslH281fV4OkSXjUAPLTIMjb1cg98zy6Vd2l7ecoom+t8LKwzLF7UgAAAABJRU5ErkJggg==) center center no-repeat;
   border: 1px solid transparent;
 }
+
 .kintoneplugin-table-td-operation .kintoneplugin-button-add-row-image:hover {
   cursor: pointer;
 }
+
 .kintoneplugin-table-td-operation .kintoneplugin-button-remove-row-image {
   margin-left: 4px;
   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAByUDbMAAABPUlEQVQ4ja2UvW6DMBDHUTMkK0vyQJXoxoaUB2nWxEorMcNgD/gOWbIii7GSJx6Bmdegq1lKF6CUAqYSJ/2HE8dP5/tyHIvFcbynlLpxHO9tsZPGGDsCgI+IrwBAOrW+zxg7WiFBEOwAwEPE6xAyVpqmNwDwgiDYTYIIIU+c8/MSZCzO+XkSyDl//g9oIO8XKEmSk+1pc0LEa5Ikpx4GAP5csFIqVEqFFqjfw8ZdGyrLsjDLMhvs0hX+sBS4EkYIIQeHUuqOP5Rl+WGMqYwxVV3Xn03TfHW+MaYqiuIx/odS6k5mJqV811pHWusoz3OW5znrfK11JKV8m8xs05rZurkS9tPNpTkTQtyFEPfVc9Zm522yAd2Sb7abw6vRXoVZSJqmN0R8mQWNdxUm7hkAXADA/1OjtdZd2n6OFuwblG9sdxWO0ggAAAAASUVORK5CYII=) center center no-repeat;
@@ -595,41 +599,123 @@
 
 /* Modal Styles */
 #modalLoading.modal {
-    display: none;
-    position: fixed;
-    z-index: 9999;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+#modalLoading .modal-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+}
+
+#modalLoading .modal-content p {
+  color: #fff
+}
+
+#modalLoading .loader {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
   }
-  
-  #modalLoading .modal-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-    text-align: center;
+
+  100% {
+    transform: rotate(360deg);
   }
-  #modalLoading .modal-content p {
-    color: #fff
-  }
-  
-  #modalLoading .loader {
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #3498db;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    animation: spin 1s linear infinite;
-  }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
+}
+
+.input-label {
+  width: 100px;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.plugin-mb-1 {
+  margin-bottom: 1rem;
+}
+
+.plugin-mr-small {
+  margin-right: 0.5rem;
+}
+
+.mf-submit-button {
+  height: 48px;
+  padding: 0px 20px;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.mf-submit-button:hover {
+  background-color: #45a049;
+}
+
+.mf-submit-button:active {
+  background-color: #3e8e41;
+}
+
+.mf-jiraTimesheet-controls {
+  margin: 10px 15px;
+}
+.mf-date-input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  outline: none;
+  background-color: #f5f5f5;
+  /* Tùy chỉnh màu nền */
+  color: #333;
+  /* Tùy chỉnh màu chữ */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* Tùy chỉnh đổ bóng */
+}
+
+.mf-date-input:hover {
+  border-color: #999;
+  /* Tùy chỉnh màu viền khi di chuột qua */
+}
+
+.mf-date-input:focus {
+  border-color: #0066cc;
+  /* Tùy chỉnh màu viền khi trường input đang được focus */
+}
+.mf-date-label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 5px;
+  /* Tùy chỉnh khoảng cách với trường input */
+}
