@@ -159,8 +159,8 @@ const pluginText = {
         en: "Get timesheet",
         ja: "タイムシートを取得する"
     },
-    "Nhập ngày bắt đầu và ngày kết thúc!": {
-        en: "Nhập ngày bắt đầu và ngày kết thúc!",
+    "Enter the start date and end date!": {
+        en: "Enter the start date and end date!",
         ja: "開始日と終了日を入力してください!"
     }
 }

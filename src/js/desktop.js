@@ -54,7 +54,7 @@ jQuery.noConflict();
           endDateValue = `${year}-${month}-${day}`;
         }
         if (!startDateValue || !endDateValue) {
-          alert(getPluginText('Nhập ngày bắt đầu và ngày kết thúc!', lang));
+          alert(getPluginText('Enter the start date and end date!', lang));
           return;
         }
         const apiUrl = timeSheetUrl + `/exportData.csv?start=${startDateValue}&end=${endDateValue}&allUsers=true&Apikey=${apiKey}`;
