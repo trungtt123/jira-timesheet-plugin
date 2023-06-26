@@ -4,7 +4,7 @@
   "scripts": {
     "start": "node scripts/npm-start.js",
     "develop": "npm run build",
-    "build": "kintone-plugin-packer --ppk private.ppk --out \"dist/MF kintone-plugin-Timesheeet.zip\" src",
+    "build": "kintone-plugin-packer --ppk private.ppk --out \"dist/MF kintone-plugin-Timesheeets.zip\" src",
     "lint": "eslint src",
     "upload": "kintone-plugin-uploader --base-url https://mediafusion-mf-trung.kintone.com --username bruceleemax111@gmail.com --password trungtt123 \"dist/MF kintone-plugin-Timesheeet.zip\""
   },
