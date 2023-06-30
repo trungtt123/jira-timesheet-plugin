@@ -41,7 +41,8 @@ jQuery.noConflict();
         </div>
         `
       );
-      $('#btnGetTimesheet, #btnGetAllTimesheet').click(async function (event) {;
+      $('#btnGetTimesheet, #btnGetAllTimesheet').click(async function (event) {
+        ;
         // Xử lý sự kiện click ở đây)
         let startDateValue = $('#mf-startDate').val();
         let endDateValue = $('#mf-endDate').val();
@@ -67,69 +68,99 @@ jQuery.noConflict();
         else {
           let response = convertCsvToArray(result.body);
           // get all records
-          let { records } = await getRecords(appId);
-          let currentData = records.map(o => {
-            return {
-              projectName: o[`${config?.timesheetProject}`].value,
-              issueType: o[`${config?.timesheetIssueType}`].value,
-              key: o[`${config?.timesheetKey}`].value,
-              summary: o[`${config?.timesheetSummary}`].value,
-              priority: o[`${config?.timesheetPriority}`].value,
-              displayName: o[`${config?.timesheetDisplayName}`].value,
-              timeSpent: o[`${config?.timesheetTimespent}`].value,
-              dateStarted: o[`${config?.timesheetDateStarted}`].value,
-              workDescription: o[`${config?.timesheetWorkDescription}`].value
-            }
-          });
+          let records = await getAllRecordsFromKintone(appId);
           // filter exist data
           const expectData = [];
-          for (let a of response) {
-            let check = true;
-            for (let b of currentData) {
-              if (a.projectName === b.projectName && a.issueType === b.issueType && a.key === b.key &&
-                a.summary === b.summary && a.priority === b.priority && a.displayName === b.displayName &&
-                a.timeSpent.toString() === b.timeSpent.toString() && new Date(`${a.dateStarted}`).toISOString() === new Date(`${b.dateStarted}`).toISOString() && a.workDescription === b.workDescription
-              ) {
-                check = false;
-                break;
-              }
-            }
-            if (check) expectData.push(a);
+          let map = new Map();
+          for (let item of records) {
+            let key = JSON.stringify({
+              projectName: item[`${config?.timesheetProject}`].value,
+              issueType: item[`${config?.timesheetIssueType}`].value,
+              key: item[`${config?.timesheetKey}`].value,
+              summary: item[`${config?.timesheetSummary}`].value,
+              priority: item[`${config?.timesheetPriority}`].value,
+              displayName: item[`${config?.timesheetDisplayName}`].value,
+              timeSpent: item[`${config?.timesheetTimespent}`].value.toString(),
+              dateStarted: new Date(`${item[`${config?.timesheetDateStarted}`].value}`).toISOString(),
+              workDescription: item[`${config?.timesheetWorkDescription}`].value
+            });
+            let count = map.get(key) || 0;
+            map.set(key, count + 1);
           }
-          for (let item of expectData) {
-            let body = {
-              'app': appId,
-              'record': {
-                [`${config?.timesheetProject}`]: {
-                  value: item?.projectName
-                },
-                [`${config?.timesheetIssueType}`]: {
-                  value: item?.issueType
-                },
-                [`${config?.timesheetKey}`]: {
-                  value: item?.key
-                },
-                [`${config?.timesheetSummary}`]: {
-                  value: item?.summary
-                },
-                [`${config?.timesheetPriority}`]: {
-                  value: item?.priority
-                },
-                [`${config?.timesheetDateStarted}`]: {
-                  value: new Date(`${item?.dateStarted}`).toISOString()
-                },
-                [`${config?.timesheetDisplayName}`]: {
-                  value: item?.displayName
-                },
-                [`${config?.timesheetTimespent}`]: {
-                  value: +item?.timeSpent
-                },
-                [`${config?.timesheetWorkDescription}`]: {
-                  value: item?.workDescription
-                }
-              }
+          let cnt0 = 0, cnt1 = 0, cnt2 = 0, cnt3 = 0, cnt4 = 0;
+          for (let [key, value] of map) {
+            if (key.includes('SUPPORT-8482')) console.log('currentData', key);
+            if (!value) cnt0 += 1;
+            if (value === 1) cnt1 += 1;
+            if (value === 2) cnt2 += 1;
+            if (value === 3) cnt3 += 1;
+            if (value === 4) cnt4 += 1;
+          }
+          for (let item of response) {
+            if (!item.timeSpent) continue;
+            let dateStarted = new Date(`${item.dateStarted}`);
+            dateStarted.setSeconds(0);
+            let key = JSON.stringify({
+              projectName: item.projectName,
+              issueType: item.issueType,
+              key: item.key,
+              summary: item.summary,
+              priority: item.priority,
+              displayName: item.displayName,
+              timeSpent: item.timeSpent.toString(),
+              dateStarted: dateStarted.toISOString(),
+              workDescription: item.workDescription
+            });
+            if (item.key === 'SUPPORT-8482') {
+              console.log('key', key);
             }
-            await addRecord(body);
+            if (!!map.get(key)) continue;
+            expectData.push(item);
+          }
+          let tmpRecords = [];
+          for (let item of expectData) {
+            tmpRecords.push({
+              [`${config?.timesheetProject}`]: {
+                value: item?.projectName
+              },
+              [`${config?.timesheetIssueType}`]: {
+                value: item?.issueType
+              },
+              [`${config?.timesheetKey}`]: {
+                value: item?.key
+              },
+              [`${config?.timesheetSummary}`]: {
+                value: item?.summary
+              },
+              [`${config?.timesheetPriority}`]: {
+                value: item?.priority
+              },
+              [`${config?.timesheetDateStarted}`]: {
+                value: new Date(`${item?.dateStarted}`).toISOString()
+              },
+              [`${config?.timesheetDisplayName}`]: {
+                value: item?.displayName
+              },
+              [`${config?.timesheetTimespent}`]: {
+                value: +item?.timeSpent
+              },
+              [`${config?.timesheetWorkDescription}`]: {
+                value: item?.workDescription
+              }
+            });
+            if (tmpRecords.length === 100) {
+              await addRecords({
+                'app': appId,
+                'records': tmpRecords
+              });
+              tmpRecords = [];
+            }
+          }
+          if (tmpRecords.length > 0) {
+            await addRecords({
+              'app': appId,
+              'records': tmpRecords
+            });
           }
         }
         modalDiv.hide();
