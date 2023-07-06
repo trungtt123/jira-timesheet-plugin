@@ -41,6 +41,14 @@ jQuery.noConflict();
         </div>
         `
       );
+      if (localStorage.getItem('mf-startDate')){
+        $("#mf-startDate").val(localStorage.getItem('mf-startDate'));
+        localStorage.setItem('mf-startDate', '');
+      }
+      if (localStorage.getItem('mf-endDate')){
+        $("#mf-endDate").val(localStorage.getItem('mf-endDate'));
+        localStorage.setItem('mf-endDate', '');
+      }
       $('#btnGetTimesheet, #btnGetAllTimesheet').click(async function (event) {
         ;
         // Xử lý sự kiện click ở đây)
@@ -58,6 +66,8 @@ jQuery.noConflict();
           alert(getPluginText('Enter the start date and end date!', lang));
           return;
         }
+        localStorage.setItem('mf-startDate', startDateValue);
+        localStorage.setItem('mf-endDate', endDateValue);
         const apiUrl = timeSheetUrl + `/exportData.csv?start=${startDateValue}&end=${endDateValue}&allUsers=true&Apikey=${apiKey}`;
         modalDiv.show();
         let result = await proxyRequest(PLUGIN_ID, apiUrl, 'GET', {}, {});

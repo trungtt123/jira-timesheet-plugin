@@ -1,5 +1,5 @@
 {
-  "name": "MF-kintone-plugin-Timesheeet",
+  "name": "MF-kintone-plugin-Timesheet",
   "version": "0.1.0",
   "scripts": {
     "start": "node scripts/npm-start.js",

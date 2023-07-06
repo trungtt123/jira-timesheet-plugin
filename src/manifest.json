@@ -34,9 +34,9 @@
     ]
   },
   "name": {
-    "en": "MF kintone-plugin-Timesheeet"
+    "en": "MF kintone-plugin-Timesheet"
   },
   "description": {
-    "en": "JIRA Timesheeet の情報を取得するプラグインです"
+    "en": "JIRA Timesheet の情報を取得するプラグインです"
   }
 }
