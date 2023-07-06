@@ -41,11 +41,11 @@ jQuery.noConflict();
         </div>
         `
       );
-      if (localStorage.getItem('mf-startDate')){
+      if (localStorage.getItem('mf-startDate')) {
         $("#mf-startDate").val(localStorage.getItem('mf-startDate'));
         localStorage.setItem('mf-startDate', '');
       }
-      if (localStorage.getItem('mf-endDate')){
+      if (localStorage.getItem('mf-endDate')) {
         $("#mf-endDate").val(localStorage.getItem('mf-endDate'));
         localStorage.setItem('mf-endDate', '');
       }
@@ -60,13 +60,17 @@ jQuery.noConflict();
           let day = String(currentDate.getDate()).padStart(2, '0');
           endDateValue = `${year}-${month}-${day}`;
         }
+        else {
+          localStorage.setItem('mf-startDate', startDateValue);
+          localStorage.setItem('mf-endDate', endDateValue);
+        }
         if (!startDateValue || !endDateValue) {
+          localStorage.setItem('mf-startDate', '');
+          localStorage.setItem('mf-endDate', '');
           alert(getPluginText('Enter the start date and end date!', lang));
           return;
         }
         // fix case reload trang web sau khi lấy dữ liệu công số sẽ mất startDate và endDate
-        localStorage.setItem('mf-startDate', startDateValue);
-        localStorage.setItem('mf-endDate', endDateValue);
         const apiUrl = timeSheetUrl + `/exportData.csv?start=${startDateValue}&end=${endDateValue}&allUsers=true&Apikey=${apiKey}`;
         modalDiv.show();
         let result = await proxyRequest(PLUGIN_ID, apiUrl, 'GET', {}, {});
@@ -74,7 +78,7 @@ jQuery.noConflict();
         if (result.status.toString() === '401') {
           alert(getPluginText('Invalid token', lang));
         }
-        else if (result.status.toString() === '403'){
+        else if (result.status.toString() === '403') {
           alert(getPluginText('Jira token does not have permission to access the resource', lang));
         }
         else {
@@ -99,15 +103,6 @@ jQuery.noConflict();
             let count = map.get(key) || 0;
             map.set(key, count + 1);
           }
-          let cnt0 = 0, cnt1 = 0, cnt2 = 0, cnt3 = 0, cnt4 = 0;
-          for (let [key, value] of map) {
-            if (key.includes('SUPPORT-8482')) console.log('currentData', key);
-            if (!value) cnt0 += 1;
-            if (value === 1) cnt1 += 1;
-            if (value === 2) cnt2 += 1;
-            if (value === 3) cnt3 += 1;
-            if (value === 4) cnt4 += 1;
-          }
           for (let item of response) {
             if (!item.timeSpent) continue;
             let dateStarted = new Date(`${item.dateStarted}`);
@@ -123,9 +118,6 @@ jQuery.noConflict();
               dateStarted: dateStarted.toISOString(),
               workDescription: item.workDescription
             });
-            if (item.key === 'SUPPORT-8482') {
-              console.log('key', key);
-            }
             if (!!map.get(key)) continue;
             expectData.push(item);
           }

@@ -5,6 +5,7 @@
   "desktop": {
     "js": [
       "js/jquery_3.3.1_jquery.min.js",
+      "js/moment.min.js",
       "js/language.js",
       "js/helper.js",
       "js/kintone.service.js",
