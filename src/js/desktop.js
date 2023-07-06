@@ -50,8 +50,6 @@ jQuery.noConflict();
         localStorage.setItem('mf-endDate', '');
       }
       $('#btnGetTimesheet, #btnGetAllTimesheet').click(async function (event) {
-        ;
-        // Xử lý sự kiện click ở đây)
         let startDateValue = $('#mf-startDate').val();
         let endDateValue = $('#mf-endDate').val();
         if (event.target.id === 'btnGetAllTimesheet') {
@@ -66,6 +64,7 @@ jQuery.noConflict();
           alert(getPluginText('Enter the start date and end date!', lang));
           return;
         }
+        // fix case reload trang web sau khi lấy dữ liệu công số sẽ mất startDate và endDate
         localStorage.setItem('mf-startDate', startDateValue);
         localStorage.setItem('mf-endDate', endDateValue);
         const apiUrl = timeSheetUrl + `/exportData.csv?start=${startDateValue}&end=${endDateValue}&allUsers=true&Apikey=${apiKey}`;
@@ -74,6 +73,9 @@ jQuery.noConflict();
         console.log('timesheetdata', result);
         if (result.status.toString() === '401') {
           alert(getPluginText('Invalid token', lang));
+        }
+        else if (result.status.toString() === '403'){
+          alert(getPluginText('Jira token does not have permission to access the resource', lang));
         }
         else {
           let response = convertCsvToArray(result.body);

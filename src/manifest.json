@@ -4,7 +4,7 @@
   "type": "APP",
   "desktop": {
     "js": [
-      "https://js.cybozu.com/jquery/3.3.1/jquery.min.js",
+      "js/jquery_3.3.1_jquery.min.js",
       "js/language.js",
       "js/helper.js",
       "js/kintone.service.js",
@@ -12,15 +12,14 @@
     ],
     "css": [
       "css/desktop.css",
-      "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css",
       "css/common.css"
     ]
   },
-  "icon": "image/icon.ico",
+  "icon": "image/icon.jpg",
   "config": {
     "html": "html/config.html",
     "js": [
-      "https://js.cybozu.com/jquery/3.3.1/jquery.min.js",
+      "js/jquery_3.3.1_jquery.min.js",
       "js/language.js",
       "js/helper.js",
       "js/kintone.service.js",
