@@ -161,7 +161,7 @@ const pluginText = {
     },
     "Enter the start date and end date!": {
         en: "Enter the start date and end date!",
-        ja: "最初日と最後日を入力！"
+        ja: "開始日と終了日を入力！"
     },
     "Jira token does not have permission to access the resource": {
         en: "Jira token does not have permission to access the resource",
