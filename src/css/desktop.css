@@ -83,3 +83,58 @@
 #projectCostTable table tbody tr:hover {
   background-color: #e2e2e2;
 }
+
+.bg-color-warning {
+  background-color: #e0a800 !important;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 4px;
+  margin: 10% auto;
+  width: 450px;
+}
+
+.modal-buttons {
+  text-align: right;
+  margin-top: 10px;
+}
+
+.modal-confirm-button {
+  padding: 6px 12px;
+  margin-left: 5px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.modal-cancel-button {
+  padding: 6px 12px;
+  margin-left: 5px;
+  background-color: #9fa6b2;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.modal-confirm-button:hover,
+.modal-cancel-button:hover {
+  opacity: 0.8;
+}
