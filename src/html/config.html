@@ -1,109 +1,251 @@
 <section class="settings">
-  <div id="modalLoading" class="modal">
-    <div class="modal-content">
-      <div class="loader"></div>
-      <p>Loading...</p>
-    </div>
-  </div>
+  <h2 class="settings-heading plugin-text-field">JIRA Timesheet Settings</h2>
+
   <form class="js-submit-settings">
-    <div class="flex-row plugin-mb-1">
-      <span class="input-label text-bold plugin-text-field">Jira token</span>
+    <div class="flex-row mb-10">
+      <div class="input-label">
+        <span class="text-bold plugin-text-field">Jira token</span>
+        <i class="fas fa-question-circle tooltip-icon">
+          <span class="tooltip-content">ThoDV1</span>
+        </i>
+      </div>
+
+      <input
+        type="password"
+        id="token"
+        class="js-text-message kintoneplugin-input-text mb-10"
+      />
       <div class="flex-column">
-        <input type="password" id="token" class="js-text-message kintoneplugin-input-text plugin-mb-1">
-        <div>
-          <input type="checkbox" name="showToken" value="showToken" id="showToken">
-          <label for="showToken" class="plugin-text-field">Show token</label>
+        <div class="show-token">
+          <input
+            type="checkbox"
+            name="showToken"
+            value="showToken"
+            id="showToken"
+            class="pointer"
+          />
+          <label for="showToken" class="plugin-text-field pointer">
+            Show token
+          </label>
         </div>
       </div>
     </div>
-    <div class="flex-row  plugin-mb-1">
-      <span class="input-label text-bold plugin-text-field">Timesheet data storage</span>
-      <div class="flex-column plugin-mr-small">
+
+    <div class="flex-row mb-10">
+      <div class="input-label">
+        <span class="text-bold plugin-text-field">Timesheet data storage</span>
+        <i class="fas fa-question-circle tooltip-icon">
+          <span class="tooltip-content">
+            Timesheetから取得した項目を保存するフィ―ルドを指定してください。
+          </span>
+        </i>
+      </div>
+
+      <div class="flex-column mr-10">
         <div id="error-timesheetFieldCode" class="text-error"></div>
-        <div class="flex-row plugin-mb-1">
-          <div class="flex-column plugin-mr-small">
-            <label for="timesheetProject" class="plugin-text-field">Project</label>
-            <select class="plugin-select" id="timesheetProject" name="timesheetProject">
-              <!-- <option value="">None</option> -->
-            </select>
+
+        <div class="flex-row mb-10">
+          <div class="flex-column mr-10">
+            <div>
+              <label for="timesheetProject" class="plugin-text-field">
+                Project
+              </label>
+              <i class="fas fa-question-circle tooltip-icon">
+                <span class="tooltip-content">ThoDV1</span>
+              </i>
+            </div>
+
+            <select
+              class="plugin-select"
+              id="timesheetProject"
+              name="timesheetProject"
+            ></select>
             <div id="error-timesheetProject" class="text-error"></div>
           </div>
-          <div class="flex-column plugin-mr-small">
-            <label for="timesheetIssueType" class="plugin-text-field">Issue type</label>
-            <select class="plugin-select" id="timesheetIssueType" name="timesheetIssueType">
-              <!-- <option value="">None</option> -->
-            </select>
+
+          <div class="flex-column mr-10">
+            <div>
+              <label for="timesheetIssueType" class="plugin-text-field">
+                Issue type
+              </label>
+              <i class="fas fa-question-circle tooltip-icon">
+                <span class="tooltip-content">ThoDV1</span>
+              </i>
+            </div>
+
+            <select
+              class="plugin-select"
+              id="timesheetIssueType"
+              name="timesheetIssueType"
+            ></select>
             <div id="error-timesheetIssueType" class="text-error"></div>
           </div>
-          <div class="flex-column plugin-mr-small">
-            <label for="timesheetKey" class="plugin-text-field">Key</label>
-            <select class="plugin-select" id="timesheetKey" name="timesheetKey">
-              <!-- <option value="">None</option> -->
-            </select>
+
+          <div class="flex-column mr-10">
+            <div>
+              <label for="timesheetKey" class="plugin-text-field">Key</label>
+              <i class="fas fa-question-circle tooltip-icon">
+                <span class="tooltip-content">ThoDV1</span>
+              </i>
+            </div>
+
+            <select
+              class="plugin-select"
+              id="timesheetKey"
+              name="timesheetKey"
+            ></select>
             <div id="error-timesheetKey" class="text-error"></div>
           </div>
         </div>
-        <div class="flex-row plugin-mb-1">
-          <div class="flex-column plugin-mr-small">
-            <label for="timesheetSummary" class="plugin-text-field">Summary</label>
-            <select class="plugin-select" id="timesheetSummary" name="timesheetSummary">
-              <!-- <option value="">None</option> -->
-            </select>
+
+        <div class="flex-row mb-10">
+          <div class="flex-column mr-10">
+            <div>
+              <label for="timesheetSummary" class="plugin-text-field">
+                Summary
+              </label>
+              <i class="fas fa-question-circle tooltip-icon">
+                <span class="tooltip-content">ThoDV1</span>
+              </i>
+            </div>
+
+            <select
+              class="plugin-select"
+              id="timesheetSummary"
+              name="timesheetSummary"
+            ></select>
             <div id="error-timesheetSummary" class="text-error"></div>
           </div>
-          <div class="flex-column plugin-mr-small">
-            <label for="timesheetPriority" class="plugin-text-field">Priority</label>
-            <select class="plugin-select" id="timesheetPriority" name="timesheetPriority">
-              <!-- <option value="">None</option> -->
-            </select>
+
+          <div class="flex-column mr-10">
+            <div>
+              <label for="timesheetPriority" class="plugin-text-field">
+                Priority
+              </label>
+              <i class="fas fa-question-circle tooltip-icon">
+                <span class="tooltip-content">ThoDV1</span>
+              </i>
+            </div>
+
+            <select
+              class="plugin-select"
+              id="timesheetPriority"
+              name="timesheetPriority"
+            ></select>
             <div id="error-timesheetPriority" class="text-error"></div>
           </div>
-          <div class="flex-column plugin-mr-small">
-            <label for="timesheetDateStarted" class="plugin-text-field">Date started</label>
-            <select class="plugin-select" id="timesheetDateStarted" name="timesheetDateStarted">
-              <!-- <option value="">None</option> -->
-            </select>
+
+          <div class="flex-column mr-10">
+            <div>
+              <label for="timesheetDateStarted" class="plugin-text-field">
+                Date started
+              </label>
+              <i class="fas fa-question-circle tooltip-icon">
+                <span class="tooltip-content">ThoDV1</span>
+              </i>
+            </div>
+
+            <select
+              class="plugin-select"
+              id="timesheetDateStarted"
+              name="timesheetDateStarted"
+            ></select>
             <div id="error-timesheetDateStarted" class="text-error"></div>
           </div>
         </div>
+
         <div class="flex-row">
-          <div class="flex-column plugin-mr-small">
-            <label for="timesheetDisplayName" class="plugin-text-field">Display name</label>
-            <select class="plugin-select" id="timesheetDisplayName" name="timesheetDisplayName">
-              <!-- <option value="">None</option> -->
-            </select>
+          <div class="flex-column mr-10">
+            <div>
+              <label for="timesheetDisplayName" class="plugin-text-field">
+                Display name
+              </label>
+              <i class="fas fa-question-circle tooltip-icon">
+                <span class="tooltip-content">ThoDV1</span>
+              </i>
+            </div>
+
+            <select
+              class="plugin-select"
+              id="timesheetDisplayName"
+              name="timesheetDisplayName"
+            ></select>
             <div id="error-timesheetDisplayName" class="text-error"></div>
           </div>
-          <div class="flex-column plugin-mr-small">
-            <label for="timesheetTimespent" class="plugin-text-field">Time spent</label>
-            <select class="plugin-select" id="timesheetTimespent" name="timesheetTimespent">
-              <!-- <option value="">None</option> -->
-            </select>
+
+          <div class="flex-column mr-10">
+            <div>
+              <label for="timesheetTimespent" class="plugin-text-field">
+                Time spent
+              </label>
+              <i class="fas fa-question-circle tooltip-icon">
+                <span class="tooltip-content">ThoDV1</span>
+              </i>
+            </div>
+
+            <select
+              class="plugin-select"
+              id="timesheetTimespent"
+              name="timesheetTimespent"
+            ></select>
             <div id="error-timesheetTimespent" class="text-error"></div>
           </div>
-          <div class="flex-column plugin-mr-small">
-            <label for="timesheetWorkDescription" class="plugin-text-field">Work description</label>
-            <select class="plugin-select" id="timesheetWorkDescription"
-              name="timesheetWorkDescription">
-              <!-- <option value="">None</option> -->
-            </select>
+
+          <div class="flex-column mr-10">
+            <div>
+              <label for="timesheetWorkDescription" class="plugin-text-field">
+                Work description
+              </label>
+              <i class="fas fa-question-circle tooltip-icon">
+                <span class="tooltip-content">ThoDV1</span>
+              </i>
+            </div>
+
+            <select
+              class="plugin-select"
+              id="timesheetWorkDescription"
+              name="timesheetWorkDescription"
+            ></select>
             <div id="error-timesheetWorkDescription" class="text-error"></div>
           </div>
         </div>
       </div>
     </div>
-    <div class="flex-row plugin-mb-1">
-      <span class="input-label text-bold plugin-text-field">Language</span>
+
+    <div class="flex-row mb-10">
+      <div class="input-label">
+        <span class="text-bold plugin-text-field">Language</span>
+        <i class="fas fa-question-circle tooltip-icon">
+          <span class="tooltip-content">ThoDV1</span>
+        </i>
+      </div>
+
       <select class="plugin-select" id="plugin-language">
         <option value="en">English</option>
         <option value="ja">Japanese</option>
       </select>
-
     </div>
+
     <div style="margin-top: 20px">
-      <button type="button"
-        class="js-cancel-button kintoneplugin-button-dialog-cancel plugin-text-field">Cancel</button>
-      <button class="kintoneplugin-button-dialog-ok plugin-text-field" id="btnSave">Save</button>
+      <button
+        type="button"
+        class="js-cancel-button kintoneplugin-button-dialog-cancel plugin-text-field"
+      >
+        Cancel
+      </button>
+      <button
+        class="kintoneplugin-button-dialog-ok plugin-text-field"
+        id="btnSave"
+      >
+        Save
+      </button>
     </div>
   </form>
+
+  <div id="modalLoading" class="modal">
+    <div class="modal-content">
+      <div class="loader"></div>
+      <p>少々お待ちください。。。</p>
+    </div>
+  </div>
 </section>

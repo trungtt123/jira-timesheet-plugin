@@ -1,17 +1,9 @@
-.settings-heading {
-  padding: 1em 0;
-}
-
-.kintoneplugin-input-text {
-  width: 17em;
-}
-
 .text-error {
   color: red;
 }
 
 .text-bold {
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .btn-create-field {
@@ -34,8 +26,8 @@
   cursor: pointer;
 }
 .plugin-select {
-  width: 18.5em;
-  padding: 13px;
+  width: 20em;
+  padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
   background-color: #fff;
@@ -57,6 +49,61 @@
   font-weight: bold;
 }
 
+.settings-heading {
+  text-align: center;
+  color: #2f75b5;
+  font-weight: bold;
+  font-size: 20px;
+}
 
+.mb-10 {
+  margin-bottom: 10px;
+}
 
+.mr-10 {
+  margin-right: 10px;
+}
 
+.show-token {
+  line-height: 48px;
+  margin-left: 10px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.tooltip-icon {
+  width: 20px;
+  height: 20px;
+  border: 1px solid transparent;
+  color: #3498db;
+  background-color: transparent;
+}
+
+.tooltip-content {
+  visibility: hidden;
+  position: absolute;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: white;
+  background-color: #3c8dbc;
+  font-size: 14px;
+  font-weight: normal;
+  max-width: 500px;
+  white-space: normal;
+  z-index: 9999;
+}
+
+.tooltip-icon:hover .tooltip-content {
+  visibility: visible;
+}
+
+label {
+  font-size: 16px;
+}
+
+.settings {
+  font-family: メイリオ, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif !important;
+}

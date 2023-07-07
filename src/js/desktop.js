@@ -16,7 +16,7 @@ jQuery.noConflict();
         html: `
           <div class="modal-content">
             <div class="loader"></div>
-            <p>${getPluginText('Get timesheet data', lang)}...</p>
+            <p>${getPluginText('Get timesheet data', lang)}</p>
           </div>
         `,
       });

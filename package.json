@@ -1,12 +1,12 @@
 {
-  "name": "MF-kintone-plugin-Timesheet",
-  "version": "0.1.0",
+  "name": "MF - Kintone plugin timesheet",
+  "version": "1.1.2",
   "scripts": {
     "start": "node scripts/npm-start.js",
     "develop": "npm run build",
-    "build": "kintone-plugin-packer --ppk private.ppk --out \"dist/MF kintone-plugin-Timesheet-v2.zip\" src",
+    "build": "kintone-plugin-packer --ppk private.ppk --out dist/plugin.zip src",
     "lint": "eslint src",
-    "upload": "kintone-plugin-uploader --base-url https://mediafusion-mf-trung.kintone.com --username bruceleemax111@gmail.com --password trungtt123 \"dist/MF kintone-plugin-Timesheet-v2.zip\""
+    "upload": "kintone-plugin-uploader dist/plugin.zip --base-url https://mediafusion-mf-trung.kintone.com --username bruceleemax111@gmail.com --password trungtt123"
   },
   "devDependencies": {
     "@cybozu/eslint-config": "^18.0.3",
@@ -14,7 +14,5 @@
     "@kintone/plugin-uploader": "^7.1.10",
     "eslint": "^8.37.0",
     "npm-run-all": "^4.1.5"
-  },
-  "dependencies": {
   }
 }
