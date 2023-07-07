@@ -20,24 +20,6 @@ async function addRecords(body) {
         });
     });
 }
-async function getRecord(appId, recordId) {
-    return new Promise((resolve, reject) => {
-        kintone.api(kintone.api.url('/k/v1/record', true) + `?app=${appId}&id=${recordId}`, 'GET', {}, function (resp) {
-            resolve(resp);
-        }, function (error) {
-            reject(error);
-        });
-    });
-}
-async function getRecords(appId, size, offset) {
-    return new Promise((resolve, reject) => {
-        kintone.api(kintone.api.url('/k/v1/records', true), 'GET', { app: appId, query: `limit ${size} offset ${offset}` }, function (resp) {
-            resolve(resp);
-        }, function (error) {
-            reject(error);
-        });
-    });
-}
 async function createCursor(appId, size = 500) {
     // auto get 500 records
     const body = {
