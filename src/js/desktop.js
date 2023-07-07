@@ -101,6 +101,7 @@ jQuery.noConflict();
             $("#modal-confirm-search-all").hide();
             let startDateValue = $("#mf-startDate").val();
             let endDateValue = $("#mf-endDate").val();
+            
             if (event.target.className === "modal-confirm-button") {
               startDateValue = "1970-01-01";
               let currentDate = new Date();
