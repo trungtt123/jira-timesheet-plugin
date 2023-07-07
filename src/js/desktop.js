@@ -173,10 +173,6 @@ jQuery.noConflict();
                 query: `${config?.timesheetDateStarted} >= "${startDateValue}T00:00:00Z" and ${config?.timesheetDateStarted} <= "${endDateValue}T23:59:59Z" order by $id asc`,
                 size: 500
               });
-              if (!records || records.length === 0) {
-                modalDiv.hide();
-                return;
-              }
               // filter exist data
               const expectData = [];
               let map = new Map();
