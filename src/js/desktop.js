@@ -7,158 +7,123 @@ jQuery.noConflict();
   const appId = kintone.app.getId();
   const lang = config?.language ? config?.language : 'en';
   const apiKey = config.token;
-  const startDateFieldCode = config?.startDateFieldCode;
-  const endDateFieldCode = config?.endDateFieldCode;
-  const timesheetFieldCode = config?.timesheetFieldCode;
   const timeSheetUrl = 'https://timesheet-plugin.herokuapp.com/api/1';
-  if (!startDateFieldCode || !endDateFieldCode || !timesheetFieldCode) {
-    alert(getPluginText('You need to configure the 3 fieldcodes as start date, end date and timesheet data storage to use MF kintone-plugin-Timesheeet.', lang));
-    return;
-  }
-  else {
-    try {
-      let appFormData = await getAppData(appId);
-      if (appFormData.properties[startDateFieldCode]?.type !== "DATE") {
-        alert(getPluginText('The start date field must have the type DATE', lang));
-        return;
-      }
-      if (appFormData.properties[endDateFieldCode]?.type !== "DATE") {
-        alert(getPluginText('The end date field must have the type DATE', lang));
-        return;
-      }
-      // if (appFormData.properties[timesheetFieldCode]?.type !== "FILE") {
-      //   alert(getPluginText('The timesheet data storage file field must have the type FILE', lang));
-      //   return;
-      // }
-    }
-    catch (e) {
-      console.error(e);
-    }
-  }
   kintone.events.on('app.record.index.show', async function (event) {
-    let arr = kintone.app.getFieldElements(timesheetFieldCode);
-    if (arr && arr.length > 0) {
-      let position = -1;
-      console.log(arr[0]);
-      console.log(arr[0].parentElement);
-      let row = arr[0].parentElement;
-      let tds = row.querySelectorAll('td');
-      for (let i = 0; i < tds.length; i++) {
-        if (tds[i] === arr[0]) {
-          position = i;
-          break;
-        }
-      }
-      arr.forEach(element => {
-        element.style.display = 'none';
+    if (!$('#mf-jiraTimesheet').length) {
+      let modalDiv = $('<div>', {
+        id: 'modalLoading',
+        class: 'modal',
+        html: `
+          <div class="modal-content">
+            <div class="loader"></div>
+            <p>${getPluginText('Get timesheet data', lang)}</p>
+          </div>
+        `,
       });
-      $(`#view-list-data-gaia table.recordlist-gaia thead th:eq(${position})`).hide();
-    }
-  })
-
-  kintone.events.on(['app.record.create.show', 'app.record.edit.show'], async function (event) {
-    let record = event.record;
-    console.log(record);
-    let startDateValue = record[config?.startDateFieldCode].value;
-    let endDateValue = record[config?.endDateFieldCode].value;
-    kintone.events.on('app.record.create.change.startDate', function (event) {
-      let record = event.record;
-      startDateValue = record['startDate'].value;
-      console.log('startDateValue', startDateValue)
-    });
-    kintone.events.on('app.record.create.change.endDate', function (event) {
-      let record = event.record;
-      endDateValue = record['endDate'].value;
-      console.log('endDateValue', endDateValue)
-    });
-    kintone.events.on('app.record.edit.change.startDate', function (event) {
-      let record = event.record;
-      startDateValue = record['startDate'].value;
-      console.log('startDateValue', startDateValue)
-    });
-    kintone.events.on('app.record.edit.change.endDate', function (event) {
-      let record = event.record;
-      endDateValue = record['endDate'].value;
-      console.log('endDateValue', endDateValue)
-    });
-  });
-  kintone.events.on(['app.record.create.submit.success', 'app.record.edit.submit.success'], async function (event) {
-    // Lấy dữ liệu của bản ghi mới được tạo
-    let modalDiv = $('<div>', {
-      id: 'modalLoading',
-      class: 'modal',
-      html: `
-        <div class="modal-content">
-          <div class="loader"></div>
-          <p>${getPluginText('Get timesheet data', lang)}...</p>
+      $('body').append(modalDiv);
+      $('.gaia-argoui-app-index-toolbar').append(
+        `
+        <div class="mf-jiraTimesheet-controls" id="mf-jiraTimesheet">
+          <div class="flex-row">
+            <div class="flex-column">
+              <label for="mf-startDate" class="mf-date-label">${getPluginText('Start date', lang)}</label>
+              <input type="date" id="mf-startDate" class="mf-date-input plugin-mb-1 plugin-mr-small">
+            </div>
+            <div class="flex-column">
+              <label for="mf-endDate" class="mf-date-label">${getPluginText('End date', lang)}</label>
+              <input type="date" id="mf-endDate" class="mf-date-input plugin-mb-1 plugin-mr-small">
+            </div>
+            <button id="btnGetTimesheet" class="mf-submit-button plugin-mb-1" style="margin-top: 26px">${getPluginText('Get timesheet', lang)}</button>
+          </div>
+          <div>
+          <button id="btnGetAllTimesheet" class="mf-submit-button">${getPluginText('Get all timesheet', lang)}</button>
+          </div>
         </div>
-      `,
-    });
-    
-    // Gắn modalDiv vào vị trí mong muốn trong tài liệu
-    // Ví dụ: Gắn vào thẻ body
-    $('body').append(modalDiv);
-    modalDiv.show();
-    try {
-      let record = event.record;
-      console.log(record);
-      let startDateValue = record[`${startDateFieldCode}`]?.value;
-      let endDateValue = record[`${endDateFieldCode}`]?.value;
-      const apiUrl = timeSheetUrl + `/exportData.csv?start=${startDateValue}&end=${endDateValue}&allUsers=true&Apikey=${apiKey}`;
-      let result = await proxyRequest(PLUGIN_ID, apiUrl, 'GET', {}, {});
-      console.log('timesheetdata', result);
-      if (result.status.toString() === '401') {
-        alert(getPluginText('Invalid token', lang));
+        `
+      );
+      if (localStorage.getItem('mf-startDate')) {
+        $("#mf-startDate").val(localStorage.getItem('mf-startDate'));
+        localStorage.setItem('mf-startDate', '');
       }
-      else {
-        let response = convertCsvToArray(result.body);
-        // get all records
-        let { records } = await getRecords(appId);
-        let currentData = [];
-        for (let item of records) {
-          if (item.$id.value === record.$id.value) continue;
-          let tableData = item[config?.timesheetFieldCode].value;
-          tableData = tableData.map(o => {
-            return {
-              projectName: o.value[`${config?.timesheetProject}`].value,
-              issueType: o.value[`${config?.timesheetIssueType}`].value,
-              key: o.value[`${config?.timesheetKey}`].value,
-              summary: o.value[`${config?.timesheetSummary}`].value,
-              priority: o.value[`${config?.timesheetPriority}`].value,
-              displayName: o.value[`${config?.timesheetDisplayName}`].value,
-              timeSpent: o.value[`${config?.timesheetTimespent}`].value,
-              dateStarted: o.value[`${config?.timesheetDateStarted}`].value,
-              workDescription: o.value[`${config?.timesheetWorkDescription}`].value,
-            }
-
-          });
-          currentData = currentData.concat(tableData);
+      if (localStorage.getItem('mf-endDate')) {
+        $("#mf-endDate").val(localStorage.getItem('mf-endDate'));
+        localStorage.setItem('mf-endDate', '');
+      }
+      $('#btnGetTimesheet, #btnGetAllTimesheet').click(async function (event) {
+        let startDateValue = $('#mf-startDate').val();
+        let endDateValue = $('#mf-endDate').val();
+        if (event.target.id === 'btnGetAllTimesheet') {
+          startDateValue = '1970-01-01';
+          let currentDate = new Date();
+          let year = currentDate.getFullYear();
+          let month = String(currentDate.getMonth() + 1).padStart(2, '0');
+          let day = String(currentDate.getDate()).padStart(2, '0');
+          endDateValue = `${year}-${month}-${day}`;
         }
-        // filter exist data
-        const expectData = [];
-        for (let a of response) {
-          let check = true;
-          for (let b of currentData) {
-            if (a.projectName === b.projectName && a.issueType === b.issueType && a.key === b.key &&
-              a.summary === b.summary && a.priority === b.priority && a.displayName === b.displayName &&
-              a.timeSpent.toString() === b.timeSpent.toString() && new Date(`${a.dateStarted}`).toISOString() === new Date(`${b.dateStarted}`).toISOString() && a.workDescription === b.workDescription
-            ) {
-              check = false;
-              break;
-            }
-
+        else {
+          localStorage.setItem('mf-startDate', startDateValue);
+          localStorage.setItem('mf-endDate', endDateValue);
+        }
+        if (!startDateValue || !endDateValue) {
+          localStorage.setItem('mf-startDate', '');
+          localStorage.setItem('mf-endDate', '');
+          alert(getPluginText('Enter the start date and end date!', lang));
+          return;
+        }
+        // fix case reload trang web sau khi lấy dữ liệu công số sẽ mất startDate và endDate
+        const apiUrl = timeSheetUrl + `/exportData.csv?start=${startDateValue}&end=${endDateValue}&allUsers=true&Apikey=${apiKey}`;
+        modalDiv.show();
+        let result = await proxyRequest(PLUGIN_ID, apiUrl, 'GET', {}, {});
+        console.log('timesheetdata', result);
+        if (result.status.toString() === '401') {
+          alert(getPluginText('Invalid token', lang));
+        }
+        else if (result.status.toString() === '403') {
+          alert(getPluginText('Jira token does not have permission to access the resource', lang));
+        }
+        else {
+          let response = convertCsvToArray(result.body);
+          // get all records
+          let records = await getAllRecordsFromKintone(appId);
+          // filter exist data
+          const expectData = [];
+          let map = new Map();
+          for (let item of records) {
+            let key = JSON.stringify({
+              projectName: item[`${config?.timesheetProject}`].value,
+              issueType: item[`${config?.timesheetIssueType}`].value,
+              key: item[`${config?.timesheetKey}`].value,
+              summary: item[`${config?.timesheetSummary}`].value,
+              priority: item[`${config?.timesheetPriority}`].value,
+              displayName: item[`${config?.timesheetDisplayName}`].value,
+              timeSpent: item[`${config?.timesheetTimespent}`].value.toString(),
+              dateStarted: new Date(`${item[`${config?.timesheetDateStarted}`].value}`).toISOString(),
+              workDescription: item[`${config?.timesheetWorkDescription}`].value
+            });
+            let count = map.get(key) || 0;
+            map.set(key, count + 1);
           }
-          if (check) expectData.push(a);
-        }
-        let body = {
-          "app": appId,
-          "id": record.$id.value,
-          "record": {}
-        }
-        let newSubtableData = [];
-        for (let item of expectData) {
-          newSubtableData.push({
-            value: {
+          for (let item of response) {
+            if (!item.timeSpent) continue;
+            let dateStarted = new Date(`${item.dateStarted}`);
+            dateStarted.setSeconds(0);
+            let key = JSON.stringify({
+              projectName: item.projectName,
+              issueType: item.issueType,
+              key: item.key,
+              summary: item.summary,
+              priority: item.priority,
+              displayName: item.displayName,
+              timeSpent: item.timeSpent.toString(),
+              dateStarted: dateStarted.toISOString(),
+              workDescription: item.workDescription
+            });
+            if (!!map.get(key)) continue;
+            expectData.push(item);
+          }
+          let tmpRecords = [];
+          for (let item of expectData) {
+            tmpRecords.push({
               [`${config?.timesheetProject}`]: {
                 value: item?.projectName
               },
@@ -186,18 +151,25 @@ jQuery.noConflict();
               [`${config?.timesheetWorkDescription}`]: {
                 value: item?.workDescription
               }
+            });
+            if (tmpRecords.length === 100) {
+              await addRecords({
+                'app': appId,
+                'records': tmpRecords
+              });
+              tmpRecords = [];
             }
-          })
+          }
+          if (tmpRecords.length > 0) {
+            await addRecords({
+              'app': appId,
+              'records': tmpRecords
+            });
+          }
         }
-        body['record'][`${config.timesheetFieldCode}`] = {
-          "value": newSubtableData
-        };
-        await updateRecord(body);
-      }
+        modalDiv.hide();
+        window.location.reload();
+      });
     }
-    catch (e) {
-      console.error(e);
-    }
-    modalDiv.remove();
-  });
+  })
 })(jQuery, kintone.$PLUGIN_ID);

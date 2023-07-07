@@ -32,6 +32,28 @@ async function uploadFile(formData) {
         // Xử lý lỗi
     }
 }
+async function addRecord(body) {
+    return new Promise((resolve, reject) => {
+        kintone.api(kintone.api.url('/k/v1/record', true), 'POST', body, function (resp) {
+            // success
+            resolve(resp);
+        }, function (error) {
+            // error
+            reject(error);
+        });
+    });
+}
+async function addRecords(body) {
+    return new Promise((resolve, reject) => {
+        kintone.api(kintone.api.url('/k/v1/records', true), 'POST', body, function (resp) {
+            // success
+            resolve(resp);
+        }, function (error) {
+            // error
+            reject(error);
+        });
+    });
+}
 async function getRecord(appId, recordId) {
     return new Promise((resolve, reject) => {
         kintone.api(kintone.api.url('/k/v1/record', true) + `?app=${appId}&id=${recordId}`, 'GET', {}, function (resp) {
@@ -41,15 +63,37 @@ async function getRecord(appId, recordId) {
         });
     });
 }
-async function getRecords(appId) {
+async function getRecords(appId, size, offset) {
     return new Promise((resolve, reject) => {
-        kintone.api(kintone.api.url('/k/v1/records', true) + `?app=${appId}`, 'GET', {}, function (resp) {
+        kintone.api(kintone.api.url('/k/v1/records', true), 'GET', { app: appId, query: `limit ${size} offset ${offset}` }, function (resp) {
             resolve(resp);
         }, function (error) {
             reject(error);
         });
     });
 }
+async function getAllRecordsFromKintone(appId) {
+    const allRecords = [];
+    let offset = 0;
+    let hasMoreRecords = true;
+
+    while (hasMoreRecords) {
+        const response = await getRecords(appId, 100, offset);
+
+        const records = response.records;
+        allRecords.push(...records);
+
+        if (records.length < 100) {
+            hasMoreRecords = false;
+        } else {
+            offset += 100;
+        }
+    }
+
+    return allRecords;
+}
+
+
 async function downloadAndReadKintoneFile(fileKey) {
     return new Promise((resolve, reject) => {
         const domainKintone = window.location.hostname;
@@ -101,30 +145,29 @@ async function getAppData(appId) {
     });
 }
 async function deployApp(appId, body) {
-    return new Promise(function(resolve, reject) {  
-      kintone.api(kintone.api.url('/k/v1/preview/app/form/fields', true), 'POST', body, function(resp) {
-        console.log('resp', resp)
-        let deployBody = {
-          'apps': [
-            {
-              'app': appId,
-              'revision': resp.revision
-            }
-          ]
-        };
-        kintone.api(kintone.api.url('/k/v1/preview/app/deploy', true), 'POST', deployBody, async function(resp) {
-          // success
-          resolve(resp);
-        }, function(error) {
-          // error
-          console.log(error);
-          reject(error);
+    return new Promise(function (resolve, reject) {
+        kintone.api(kintone.api.url('/k/v1/preview/app/form/fields', true), 'POST', body, function (resp) {
+            console.log('resp', resp)
+            let deployBody = {
+                'apps': [
+                    {
+                        'app': appId,
+                        'revision': resp.revision
+                    }
+                ]
+            };
+            kintone.api(kintone.api.url('/k/v1/preview/app/deploy', true), 'POST', deployBody, async function (resp) {
+                // success
+                resolve(resp);
+            }, function (error) {
+                // error
+                console.log(error);
+                reject(error);
+            });
+        }, function (error) {
+            // error
+            console.log(error);
+            reject(error);
         });
-      }, function(error) {
-        // error
-        console.log(error);
-        reject(error);
-      });
     });
-  }
-  
+}

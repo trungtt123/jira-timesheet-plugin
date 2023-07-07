@@ -4,23 +4,20 @@
   "type": "APP",
   "desktop": {
     "js": [
-      "https://js.cybozu.com/jquery/3.3.1/jquery.min.js",
+      "js/jquery_3.3.1_jquery.min.js",
+      "js/moment.min.js",
       "js/language.js",
       "js/helper.js",
       "js/kintone.service.js",
       "js/desktop.js"
     ],
-    "css": [
-      "css/desktop.css",
-      "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css",
-      "css/common.css"
-    ]
+    "css": ["css/desktop.css", "css/common.css"]
   },
-  "icon": "image/icon.ico",
+  "icon": "image/icon.jpg",
   "config": {
     "html": "html/config.html",
     "js": [
-      "https://js.cybozu.com/jquery/3.3.1/jquery.min.js",
+      "js/jquery_3.3.1_jquery.min.js",
       "js/language.js",
       "js/helper.js",
       "js/kintone.service.js",
@@ -28,15 +25,17 @@
     ],
     "css": [
       "css/config.css",
-      "css/common.css"
+      "css/common.css",
+      "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
     ],
-    "required_params": [
-    ]
+    "required_params": []
   },
   "name": {
-    "en": "MF kintone-plugin-Timesheeet"
+    "en": "MF Kintone Timesheet",
+    "ja": "MF Kintone タイムシート"
   },
   "description": {
-    "en": "JIRA Timesheeet の情報を取得するプラグインです"
+    "en": "Jira timesheet is a tool used for tracking and managing time spent on tasks in Jira. It helps teams monitor productivity, track work progress, and analyze resource allocation.",
+    "ja": "JIRAのタイムシート機能は、プロジェクトやタスクの作業時間を追跡するための便利なツールです。タスクごとに時間を入力し、プロジェクト全体の作業量や進捗を可視化することができます。さらに、週や月単位で作業時間をまとめて表示することもできます。効率的なタイムマネジメントやプロジェクト管理に役立つツールとして、JIRAのタイムシートは重要な役割を果たしています。"
   }
 }
