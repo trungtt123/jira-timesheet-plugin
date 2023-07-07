@@ -14,18 +14,18 @@ jQuery.noConflict();
         `<div id="modal-confirm-search-all" class="modal">
           <div class="modal-content">
             <p>${getPluginText(
-              "全てのタイムシートを取得したいですか？",
-              lang
-            )}</p>
+          "全てのタイムシートを取得したいですか？",
+          lang
+        )}</p>
             <div class="modal-buttons">
               <button class="modal-confirm-button">${getPluginText(
-                "確認する",
-                lang
-              )}</button>
+          "確認する",
+          lang
+        )}</button>
               <button class="modal-cancel-button">${getPluginText(
-                "キャンセル",
-                lang
-              )}</button>
+          "キャンセル",
+          lang
+        )}</button>
             </div>
           </div>
         </div>`
@@ -44,29 +44,29 @@ jQuery.noConflict();
           <div class="flex-row">
             <div class="flex-column">
               <label for="mf-startDate" class="mf-date-label">${getPluginText(
-                "Start date",
-                lang
-              )}</label>
+          "Start date",
+          lang
+        )}</label>
               <input type="date" id="mf-startDate" class="mf-date-input plugin-mr-small">
             </div>
 
             <div class="flex-column">
               <label for="mf-endDate" class="mf-date-label">${getPluginText(
-                "End date",
-                lang
-              )}</label>
+          "End date",
+          lang
+        )}</label>
               <input type="date" id="mf-endDate" class="mf-date-input plugin-mr-small">
             </div>
 
             <button id="btnGetTimesheet" class="mf-submit-button mr-2">${getPluginText(
-              "Get timesheet",
-              lang
-            )}</button>
+          "Get timesheet",
+          lang
+        )}</button>
 
             <button id="btnGetAllTimesheet" class="mf-submit-button">${getPluginText(
-              "Get all timesheet",
-              lang
-            )}</button>
+          "Get all timesheet",
+          lang
+        )}</button>
           </div>
         </div>`
       );
@@ -101,7 +101,7 @@ jQuery.noConflict();
             $("#modal-confirm-search-all").hide();
             let startDateValue = $("#mf-startDate").val();
             let endDateValue = $("#mf-endDate").val();
-            
+
             if (event.target.className === "modal-confirm-button") {
               startDateValue = "1970-01-01";
               let currentDate = new Date();
@@ -161,14 +161,22 @@ jQuery.noConflict();
               );
             } else {
               let response = convertCsvToArray(result.body);
-              
+
               if (response.length === 0) {
                 modalDiv.hide();
-                return
+                return;
               }
 
               // get all records
-              let records = await getAllRecordsFromKintone(appId);
+              let records = await getAllRecordsFromKintone({
+                app: appId,
+                query: `${config?.timesheetDateStarted} >= "${startDateValue}T00:00:00Z" and ${config?.timesheetDateStarted} <= "${endDateValue}T23:59:59Z" order by $id asc`,
+                size: 500
+              });
+              if (!records || records.length === 0) {
+                modalDiv.hide();
+                return;
+              }
               // filter exist data
               const expectData = [];
               let map = new Map();
