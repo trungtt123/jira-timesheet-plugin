@@ -170,10 +170,34 @@ const pluginText = {
     en: "Enter the start date and end date!",
     ja: "開始日と終了日を入力！",
   },
+  "Enter the start date!": {
+    en: "Enter the start date!",
+    ja: "開始日を入力！",
+  },
+  "Enter the end date!": {
+    en: "Enter the end date!",
+    ja: "終了日を入力！",
+  },
+  "Start date greater than end date!": {
+    en: "start date greater than end date!",
+    ja: "開始日が終了日より後である!",
+  },
   "Jira token does not have permission to access the resource": {
     en: "Jira token does not have permission to access the resource",
     ja: "Jiraのトークンにはリソースへのアクセス権限がありません",
   },
+  "確認する": {
+    en: "Confirm",
+    ja: "確認する",
+  },
+  "キャンセル": {
+    en: "Cancel",
+    ja: "キャンセル",
+  },
+  "全てのタイムシートを取得したいですか？": {
+    en: "Want to get all timesheets?",
+    ja: "全てのタイムシートを取得したいですか？",
+  }
 };
 
 function getPluginText(text, lang) {
