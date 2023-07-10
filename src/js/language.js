@@ -186,18 +186,42 @@ const pluginText = {
     en: "Jira token does not have permission to access the resource",
     ja: "Jiraのトークンにはリソースへのアクセス権限がありません",
   },
-  "確認する": {
+  確認する: {
     en: "Confirm",
     ja: "確認する",
   },
-  "キャンセル": {
+  キャンセル: {
     en: "Cancel",
     ja: "キャンセル",
   },
   "全てのタイムシートを取得したいですか？": {
     en: "Want to get all timesheets?",
     ja: "全てのタイムシートを取得したいですか？",
-  }
+  },
+  "Timesheetから取得した項目を保存するフィ―ルドを指定してください。": {
+    en: "Please specify the field to store the items retrieved from the Timesheet.",
+    ja: "Timesheetから取得した項目を保存するフィ―ルドを指定してください。",
+  },
+  "JIRA Timesheetのキーを入力します": {
+    en: "Please enter your JIRA Timesheet key",
+    ja: "JIRA Timesheetのキーを入力します",
+  },
+  "文字列のフィールドを指定してください。": {
+    en: "Please specify a string field.",
+    ja: "文字列のフィールドを指定してください。",
+  },
+  "日時のフィールドを指定してください。": {
+    en: "Please specify a datetime field.",
+    ja: "日時のフィールドを指定してください。",
+  },
+  "数値のフィールドを指定してください。": {
+    en: "Please specify a numeric field.",
+    ja: "数値のフィールドを指定してください。",
+  },
+  "使用する言語を選んでください。": {
+    en: "Please select your preferred language.",
+    ja: "使用する言語を選んでください。",
+  },
 };
 
 function getPluginText(text, lang) {
