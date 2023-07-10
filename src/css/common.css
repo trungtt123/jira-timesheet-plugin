@@ -674,7 +674,7 @@
 }
 
 .input-label {
-  width: 225px;
+  width: 230px;
   display: inline-block;
 }
 
@@ -712,7 +712,7 @@
 }
 
 #btnGetTimesheet {
-  background-color: #218838;
+  background-color: #28a745;
 }
 
 #btnGetAllTimesheet {

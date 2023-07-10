@@ -101,7 +101,8 @@ jQuery.noConflict();
             $("#modal-confirm-search-all").hide();
             let startDateValue = $("#mf-startDate").val();
             let endDateValue = $("#mf-endDate").val();
-            if (event.target.id === "btnGetAllTimesheet") {
+
+            if (event.target.className === "modal-confirm-button") {
               startDateValue = "1970-01-01";
               let currentDate = new Date();
               let year = currentDate.getFullYear();
@@ -160,8 +161,18 @@ jQuery.noConflict();
               );
             } else {
               let response = convertCsvToArray(result.body);
+
+              if (response.length === 0) {
+                modalDiv.hide();
+                return;
+              }
+
               // get all records
-              let records = await getAllRecordsFromKintone(appId);
+              let records = await getAllRecordsFromKintone({
+                app: appId,
+                query: `${config?.timesheetDateStarted} >= "${startDateValue}T00:00:00Z" and ${config?.timesheetDateStarted} <= "${endDateValue}T23:59:59Z"`,
+                size: 500,
+              });
               // filter exist data
               const expectData = [];
               let map = new Map();

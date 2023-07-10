@@ -4,9 +4,9 @@
   "scripts": {
     "start": "node scripts/npm-start.js",
     "develop": "npm run build",
-    "build": "kintone-plugin-packer --ppk private.ppk --out dist/plugin.zip src",
+    "build": "kintone-plugin-packer --ppk private.ppk --out dist/MF-Kintone-plugin-timesheet.zip src",
     "lint": "eslint src",
-    "upload": "kintone-plugin-uploader dist/plugin.zip --base-url https://mediafusion-mf-trung.kintone.com --username bruceleemax111@gmail.com --password trungtt123"
+    "upload": "kintone-plugin-uploader dist/MF-Kintone-plugin-timesheet.zip --base-url https://mediafusion-mf-trung.kintone.com --username bruceleemax111@gmail.com --password trungtt123"
   },
   "devDependencies": {
     "@cybozu/eslint-config": "^18.0.3",
