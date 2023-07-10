@@ -99,7 +99,6 @@ jQuery.noConflict();
     window.location.href = "../../" + kintone.app.getId() + "/plugin/";
   });
   $showToken.change(function (e) {
-    console.log(e.target.checked);
     if (e.target.checked) {
       $("#token").prop("type", "text");
     } else {
