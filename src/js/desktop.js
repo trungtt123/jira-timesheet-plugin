@@ -166,12 +166,13 @@ jQuery.noConflict();
                 modalDiv.hide();
                 return;
               }
-
+              let stDate = new Date(`${startDateValue} 00:00:00`).toISOString();
+              let edDate = new Date(`${endDateValue} 23:59:59`).toISOString();
               // Get records by dateTime
               const recordsByDateTime = await getAllRecordsFromKintone({
                 app: appId,
                 fields: ['$id'],
-                query: `${config?.timesheetDateStarted} >= "${startDateValue}T00:00:00Z" and ${config?.timesheetDateStarted} <= "${endDateValue}T23:59:59Z"`,
+                query: `${config?.timesheetDateStarted} >= "${stDate}" and ${config?.timesheetDateStarted} <= "${edDate}"`,
                 size: 500,
               });
 
