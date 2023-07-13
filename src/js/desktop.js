@@ -167,55 +167,24 @@ jQuery.noConflict();
                 return;
               }
 
-              // get all records
-              let records = await getAllRecordsFromKintone({
+              // Get records by dateTime
+              const recordsByDateTime = await getAllRecordsFromKintone({
                 app: appId,
+                fields: ['$id'],
                 query: `${config?.timesheetDateStarted} >= "${startDateValue}T00:00:00Z" and ${config?.timesheetDateStarted} <= "${endDateValue}T23:59:59Z"`,
                 size: 500,
               });
-              // filter exist data
-              const expectData = [];
-              let map = new Map();
-              for (let item of records) {
-                let key = JSON.stringify({
-                  projectName: item[`${config?.timesheetProject}`].value,
-                  issueType: item[`${config?.timesheetIssueType}`].value,
-                  key: item[`${config?.timesheetKey}`].value,
-                  summary: item[`${config?.timesheetSummary}`].value,
-                  priority: item[`${config?.timesheetPriority}`].value,
-                  displayName: item[`${config?.timesheetDisplayName}`].value,
-                  timeSpent:
-                    item[`${config?.timesheetTimespent}`].value.toString(),
-                  dateStarted: new Date(
-                    `${item[`${config?.timesheetDateStarted}`].value}`
-                  ).toISOString(),
-                  workDescription:
-                    item[`${config?.timesheetWorkDescription}`].value,
-                });
-                let count = map.get(key) || 0;
-                map.set(key, count + 1);
-              }
+
+              // Delete records by dateTime
+              const recordIdsDelete = recordsByDateTime.map(record => parseInt(record.$id.value));
+              await deleteRecordsByRecordIds(appId, recordIdsDelete);
+              
+              // Insert records from JIRA Timesheet
+              const recordsInsert = [];
               for (let item of response) {
                 if (!item.timeSpent) continue;
-                let dateStarted = new Date(`${item.dateStarted}`);
-                dateStarted.setSeconds(0);
-                let key = JSON.stringify({
-                  projectName: item.projectName,
-                  issueType: item.issueType,
-                  key: item.key,
-                  summary: item.summary,
-                  priority: item.priority,
-                  displayName: item.displayName,
-                  timeSpent: item.timeSpent.toString(),
-                  dateStarted: dateStarted.toISOString(),
-                  workDescription: item.workDescription,
-                });
-                if (!!map.get(key)) continue;
-                expectData.push(item);
-              }
-              let tmpRecords = [];
-              for (let item of expectData) {
-                tmpRecords.push({
+
+                recordsInsert.push({
                   [`${config?.timesheetProject}`]: {
                     value: item?.projectName,
                   },
@@ -244,20 +213,9 @@ jQuery.noConflict();
                     value: item?.workDescription,
                   },
                 });
-                if (tmpRecords.length === 100) {
-                  await addRecords({
-                    app: appId,
-                    records: tmpRecords,
-                  });
-                  tmpRecords = [];
-                }
               }
-              if (tmpRecords.length > 0) {
-                await addRecords({
-                  app: appId,
-                  records: tmpRecords,
-                });
-              }
+              
+              await insertRecords(appId, recordsInsert);
             }
           } catch (error) {
             alert(error);

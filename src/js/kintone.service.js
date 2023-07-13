@@ -129,3 +129,31 @@ async function deployApp(appId, body) {
         });
     });
 }
+
+async function deleteRecordsByRecordIds(appId, recordIdsDelete) {
+    for (let i = 0; i < recordIdsDelete.length; i += 100) {
+        const batchIds = recordIdsDelete.slice(i, i + 100);
+        
+        await new Promise((resolve, reject) => {
+            kintone.api(kintone.api.url('/k/v1/records', true), 'DELETE', { app: appId, ids: batchIds }, function (resp) {
+                resolve(resp);
+            }, function (error) {
+                reject(error);
+            });
+        });
+    }
+}
+
+async function insertRecords(appId, recordsInsert) {
+    for (let i = 0; i < recordsInsert.length; i += 100) {
+        const records = recordsInsert.slice(i, i + 100);
+
+        await new Promise((resolve, reject) => {
+            kintone.api(kintone.api.url('/k/v1/records', true), 'POST', { app: appId, records: records }, function (resp) {
+                resolve(resp);
+            }, function (error) {
+                reject(error);
+            });
+        });
+    }
+}
