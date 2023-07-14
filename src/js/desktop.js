@@ -144,9 +144,10 @@ jQuery.noConflict();
               return;
             }
             // fix case reload trang web sau khi lấy dữ liệu công số sẽ mất startDate và endDate
+            const startDateMinusOneDay = moment(startDateValue).subtract(1, "days").format("YYYY-MM-DD");
             const apiUrl =
               timeSheetUrl +
-              `/exportData.csv?start=${startDateValue}&end=${endDateValue}&allUsers=true&Apikey=${apiKey}`;
+              `/exportData.csv?start=${startDateMinusOneDay}&end=${endDateValue}&allUsers=true&Apikey=${apiKey}`;
             modalDiv.show();
             let result = await proxyRequest(PLUGIN_ID, apiUrl, "GET", {}, {});
             console.log("timesheetdata", result);
@@ -168,10 +169,11 @@ jQuery.noConflict();
               }
 
               // Get records by dateTime
+              const stDate = new Date(`${startDateValue} 00:00:00`).toISOString();
+              const edDate = new Date(`${endDateValue} 23:59:59`).toISOString();
               const recordsByDateTime = await getAllRecordsFromKintone({
                 app: appId,
-                fields: ['$id'],
-                query: `${config?.timesheetDateStarted} >= "${startDateValue}T00:00:00Z" and ${config?.timesheetDateStarted} <= "${endDateValue}T23:59:59Z"`,
+                query: `${config?.timesheetDateStarted} >= "${stDate}" and ${config?.timesheetDateStarted} <= "${edDate}"`,
                 size: 500,
               });
 
@@ -182,7 +184,12 @@ jQuery.noConflict();
               // Insert records from JIRA Timesheet
               const recordsInsert = [];
               for (let item of response) {
-                if (!item.timeSpent) continue;
+                let dateStarted = new Date(`${item.dateStarted}`);
+                dateStarted.setSeconds(0);
+
+                if (!item.timeSpent || moment(startDateMinusOneDay).diff(moment(dateStarted).format("YYYY-MM-DD")) === 0) {
+                  continue;
+                }
 
                 recordsInsert.push({
                   [`${config?.timesheetProject}`]: {
@@ -201,7 +208,7 @@ jQuery.noConflict();
                     value: item?.priority,
                   },
                   [`${config?.timesheetDateStarted}`]: {
-                    value: new Date(`${item?.dateStarted}`).toISOString(),
+                    value: dateStarted.toISOString(),
                   },
                   [`${config?.timesheetDisplayName}`]: {
                     value: item?.displayName,
